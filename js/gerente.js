@@ -13,11 +13,11 @@ document.addEventListener("DOMContentLoaded", function () {
     const tablaFunciones = document.getElementById('tabla-funciones');
     const tablaEmpleados = document.getElementById('tabla-empleados');
     const modalPelicula = document.getElementById('modal-pelicula');
-    const cerrarModal = document.querySelector('.cerrar-modal');
     const formPelicula = document.getElementById('form-pelicula');
 
     /***********************************Seccion Empleados*****************************/
     let empleadosTotal = [];
+
     // Mostrar vista de Empleados
     menuEmpleados.addEventListener('click', function () {
         vistaPeliculas.style.display = 'none';
@@ -100,14 +100,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function guardarRol() {
         const rolId = document.getElementById('rolSelect').value;
-
-        // Llamar al backend para actualizar el rol del empleado
         fetch(`http://localhost:8080/empleados/actualizarRol/${window.empleadoId}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(rolId) // Enviar el ID del rol seleccionado
+            body: JSON.stringify(rolId)
         })
             .then(response => response.json())
             .then(data => {
@@ -132,12 +130,10 @@ document.addEventListener("DOMContentLoaded", function () {
     // Detectar cuando el modal se cierra y recargar la tabla
     const modalElement = document.getElementById('editRoleModal');
     modalElement.addEventListener('hidden.bs.modal', function () {
-        cargarEmpleados(); // Recargar la tabla cuando el modal se cierra
+        cargarEmpleados(); 
     });
 
-    /**Ver info de las funciones del empleado */
     // Función para abrir el modal Ver Info
-
     function abrirModalVerInfo(empleadoId) {
         document.getElementById("modalVerInfo").style.display = "block";
         cargarFuncionesEmpleado(empleadoId); // Cargar funciones del empleado
@@ -176,7 +172,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 const tabla = document.getElementById("tablaFuncionesEmpleado").getElementsByTagName('tbody')[0];
                 tabla.innerHTML = '';
 
-                // Recorrer los datos y agregarlos a la tabla
                 data.forEach(funcion => {
                     const fila = tabla.insertRow();
                     fila.insertCell(0).textContent = funcion.id;
@@ -185,7 +180,6 @@ document.addEventListener("DOMContentLoaded", function () {
                     fila.insertCell(3).textContent = funcion.sala.id;
                     fila.insertCell(4).textContent = funcion.pelicula.titulo;
 
-                    // Crear botón de eliminar
                     const btnEliminar = document.createElement("button");
                     btnEliminar.textContent = "Eliminar";
                     btnEliminar.onclick = function () {
@@ -207,7 +201,7 @@ document.addEventListener("DOMContentLoaded", function () {
             .then(response => response.json())
             .then(data => {
                 const selectFecha = document.getElementById('fechaSeleccionada');
-                selectFecha.innerHTML = ''; // Limpiar opciones anteriores
+                selectFecha.innerHTML = ''; 
                 data.forEach(fecha => {
                     const option = document.createElement("option");
                     option.value = fecha;
@@ -229,18 +223,14 @@ document.addEventListener("DOMContentLoaded", function () {
                 .then(response => response.json())
                 .then(data => {
                     const selectFuncion = document.getElementById('funcionSeleccionada');
-                    selectFuncion.innerHTML = ''; // Limpiar opciones anteriores
-
-                    // Crear opción por defecto
+                    selectFuncion.innerHTML = ''; 
                     const optionDefault = document.createElement("option");
                     optionDefault.value = "";
                     optionDefault.textContent = "Seleccione una función";
                     selectFuncion.appendChild(optionDefault);
-
-                    // Agregar las funciones al select
                     data.forEach(funcion => {
                         const option = document.createElement("option");
-                        option.value = funcion.id; // Asumimos que la función tiene un 'id'
+                        option.value = funcion.id; 
                         option.textContent = `Sala: ${funcion.sala.id} - Hora:${funcion.horario} - Peli: ${funcion.pelicula.titulo}`;
                         selectFuncion.appendChild(option);
                     });
@@ -264,7 +254,6 @@ document.addEventListener("DOMContentLoaded", function () {
             })
                 .then(response => response.json())
                 .then(data => {
-                    // Recargar la tabla de funciones después de asignar
                     cargarFuncionesEmpleado(window.empleadoId);
                     alert('Función asignada correctamente');
                 })
@@ -302,7 +291,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
                 // Si la respuesta es 204 (No Content), no hace falta hacer .json()
                 alert('Relación eliminada correctamente');
-                // Recargar la tabla de funciones para reflejar los cambios
                 cargarFuncionesEmpleado(empleadoId);
             })
             .catch(error => {
@@ -328,7 +316,6 @@ document.addEventListener("DOMContentLoaded", function () {
             .then(data => {
                 const rolSelect = document.getElementById('empleado-rol');
                 rolSelect.innerHTML = '';
-                // Agregar las opciones de roles al combo box
                 data.forEach(rol => {
                     const option = document.createElement('option');
                     option.value = rol.id;
@@ -345,16 +332,11 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     function agregarEmpleado() {
-
-        // Obtener los valores del formulario
         const nombre = document.getElementById('empleado-nombre').value;
         const documento = document.getElementById('empleado-documento').value;
         const email = document.getElementById('empleado-email').value;
         const rol = document.getElementById('empleado-rol').value;
         const contrasena = document.getElementById('empleado-contrasena').value;
-
-
-        // Crear el objeto con los datos del empleado
         const empleadoData = {
             nombre: nombre,
             documento: documento,
@@ -365,8 +347,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         };
 
-        // Hacer el POST al backend
-        fetch('http://localhost:8080/empleados', { // Ajusta la URL según tu API
+        fetch('http://localhost:8080/empleados', { 
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -394,8 +375,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function mostrarEmpleados(empleadosFiltrados) {
-        // const tablaEmpleados = document.querySelector('#tablaEmpleados');
-        tablaEmpleados.innerHTML = ''; // Limpia las filas existentes
+        tablaEmpleados.innerHTML = ''; 
 
         empleadosFiltrados.forEach(empleado => {
             const fila = document.createElement('tr');
@@ -412,7 +392,6 @@ document.addEventListener("DOMContentLoaded", function () {
                         <button class="ver-info" data-id="${empleado.id}">Ver info</button>
                     </td>
             `;
-
             tablaEmpleados.appendChild(fila);
             setupEmpleadosEventListeners();
         });
@@ -452,7 +431,7 @@ document.addEventListener("DOMContentLoaded", function () {
         fetch('http://localhost:8080/peliculas')
             .then(response => response.json())
             .then(data => {
-                tablaPeliculas.innerHTML = ''; // Limpiar tabla
+                tablaPeliculas.innerHTML = ''; 
                 data.forEach(pelicula => {
                     const tr = document.createElement('tr');
                     tr.innerHTML = `
@@ -467,7 +446,6 @@ document.addEventListener("DOMContentLoaded", function () {
                     tablaPeliculas.appendChild(tr);
                 });
 
-                // Agregar funcionalidad para editar y eliminar película
                 const botonesEliminar = document.querySelectorAll('.eliminar');
                 botonesEliminar.forEach(boton => {
                     boton.addEventListener('click', function () {
@@ -485,7 +463,7 @@ document.addEventListener("DOMContentLoaded", function () {
             .then(tieneFunciones => {
                 if (tieneFunciones) {
                     alert('No se puede eliminar la película porque tiene funciones asociadas.');
-                    return; // Detener el flujo si tiene funciones asociadas
+                    return; 
                 }
     
                 // Si no tiene funciones, proceder a eliminar la película
@@ -511,20 +489,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 alert('Error al verificar las funciones asociadas.');
             });
     }
-    
-
-
-    // function editarPelicula(id) {
-    //     fetch(`http://localhost:8080/peliculas/${id}`)
-    //         .then(response => response.json())
-    //         .then(pelicula => {
-    //             document.getElementById('titulo').value = pelicula.titulo;
-    //             document.getElementById('duracion').value = pelicula.duracion;
-    //             document.getElementById('sinopsis').value = pelicula.sinopsis;
-    //             document.getElementById('genero').value = pelicula.genero;
-    //             modalPelicula.style.display = 'flex';
-    //         });
-    // }
 
     // Agregar una nueva película
     document.getElementById('btn-agregar-pelicula').addEventListener('click', function () {
@@ -565,14 +529,11 @@ document.addEventListener("DOMContentLoaded", function () {
                 id: generoId,
             }
         };
-
-        // Validar que se haya seleccionado un género
         if (!generoId) {
             alert('Por favor, selecciona un género.');
             return;
         }
 
-        // Enviar datos al backend
         fetch('http://localhost:8080/peliculas', {
             method: 'POST',
             headers: {
@@ -584,7 +545,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 if (response.ok) {
                     alert('Película agregada exitosamente.');
                     formPelicula.reset();
-                    cargarPeliculas(); // Actualizar la lista de películas
+                    cargarPeliculas(); 
                 } else {
                     console.error('Error al guardar la película:', response.statusText);
                 }
