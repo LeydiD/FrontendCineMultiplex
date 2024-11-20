@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", function () {
-    // Selección de elementos
     const menuPeliculas = document.getElementById('menu-peliculas');
     const menuFunciones = document.getElementById('menu-funciones');
     const menuEmpleados = document.getElementById('menu-empleados');
@@ -15,10 +14,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const modalPelicula = document.getElementById('modal-pelicula');
     const formPelicula = document.getElementById('form-pelicula');
 
-    /***********************************Seccion Empleados*****************************/
-    let empleadosTotal = [];
-
-    // Mostrar vista de Empleados
+    // VISTAS
     menuEmpleados.addEventListener('click', function () {
         vistaPeliculas.style.display = 'none';
         vistaFunciones.style.display = 'none';
@@ -26,7 +22,26 @@ document.addEventListener("DOMContentLoaded", function () {
         cargarEmpleados();
     });
 
-    // Implementación para Empleados
+    menuPeliculas.addEventListener('click', function () {
+        vistaPeliculas.style.display = 'block';
+        vistaFunciones.style.display = 'none';
+        vistaEmpleados.style.display = 'none';
+        cargarPeliculas();  // Cargar las películas
+    });
+
+    menuFunciones.addEventListener('click', function () {
+        vistaPeliculas.style.display = 'none';
+        vistaFunciones.style.display = 'block';
+        vistaEmpleados.style.display = 'none';
+        cargarFunciones();  // Cargar las funciones
+    });
+
+    let empleadosTotal = [];
+    let peliculasTotales = [];
+
+
+    //Cargar en tablas
+
     function cargarEmpleados() {
         fetch('http://localhost:8080/empleados')
             .then(response => response.json())
@@ -49,7 +64,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 `;
                     tablaEmpleados.appendChild(tr);
                 });
-
                 setupEmpleadosEventListeners();
             });
     }
@@ -72,14 +86,119 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // Trae los roles desde el backend
+    function cargarPeliculas() {
+        fetch('http://localhost:8080/peliculas')
+            .then(response => response.json())
+            .then(data => {
+                tablaPeliculas.innerHTML = '';
+                peliculasTotales = data;
+                data.forEach(pelicula => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td>${pelicula.titulo}</td>
+                        <td>${pelicula.duracion}</td>
+                        <td>${pelicula.sinopsis}</td>
+                        <td>${pelicula.genero.descripcion}</td>
+                        <td>
+                            <button class="eliminar" data-id="${pelicula.id}">Eliminar</button>
+                        </td>
+                    `;
+                    tablaPeliculas.appendChild(tr);
+                });
+                setupPeliculaEventListeners();
+            });
+    }
+
+    function setupPeliculaEventListeners() {
+        const botonesEliminar = document.querySelectorAll('.eliminar');
+        botonesEliminar.forEach(boton => {
+            boton.addEventListener('click', function () {
+                const id = this.getAttribute('data-id');
+                eliminarPelicula(id);
+            });
+        });
+    }
+
+
+    function cargarFunciones() {
+        fetch('http://localhost:8080/funciones')
+            .then(response => response.json())
+            .then(data => {
+                tablaFunciones.innerHTML = '';
+                data.forEach(funcion => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td>${funcion.id}</td>
+                        <td>${funcion.horario}</td>
+                        <td>${funcion.fecha}</td>
+                        <td>${funcion.pelicula.titulo}</td>
+                        <td>${funcion.sala.id}</td>
+                        <td>${funcion.sala.tipoProyeccion.descripcion}</td>
+    
+                        <td>
+                            <button class="editar-funcion" data-id="${funcion.id}">Editar</button>
+                            <button class="eliminar-funcion" data-id="${funcion.id}">Eliminar</button>
+                        </td>
+                    `;
+                    tablaFunciones.appendChild(tr);
+                });
+
+                // Agregar event listeners para los botones
+                setupFuncionesEventListeners();
+            });
+    }
+
+    // Event listeners para Funciones
+    function setupFuncionesEventListeners() {
+        document.querySelectorAll('.eliminar-funcion').forEach(boton => {
+            boton.addEventListener('click', function () {
+                const id = this.getAttribute('data-id');
+                eliminarFuncion(id);
+            });
+        });
+
+        document.querySelectorAll('.editar-funcion').forEach(boton => {
+            boton.addEventListener('click', function () {
+                const id = this.getAttribute('data-id');
+                editarFuncion(id);
+            });
+        });
+    }
+
+    /***********************************Seccion Empleados*****************************/
+
+    // Modal para editar el rol
+    function abrirModal(empleadoId) {
+        cargarRoles();
+        const modal = new bootstrap.Modal(document.getElementById('editRoleModal'));
+        modal.show();
+        window.empleadoId = empleadoId; // Guardamos el ID del empleado para usarlo al guardar
+    }
+
+    //Al dar click en guardar guarda el rol
+    document.querySelector('.btn-primary').addEventListener('click', function () {
+        guardarRol();
+    });
+
+    document.querySelector('.btn-secondary').addEventListener('click', function () {
+        const modal = bootstrap.Modal.getInstance(document.getElementById('editRoleModal'));
+        modal.hide(); // Cerrar el modal al hacer clic en "Cancelar"
+    });
+
+    // Detectar cuando el modal se cierra y recargar la tabla
+    const modalElement = document.getElementById('editRoleModal');
+    modalElement.addEventListener('hidden.bs.modal', function () {
+        cargarEmpleados();
+    });
+
+
+    // Carga los roles en el editar rol empleado
     function cargarRoles() {
         fetch('http://localhost:8080/rols')
             .then(response => response.json())
             .then(data => {
                 const rolSelect = document.getElementById('rolSelect');
                 rolSelect.innerHTML = '';
-                // Agregar las opciones de roles al combo box
                 data.forEach(rol => {
                     const option = document.createElement('option');
                     option.value = rol.id;
@@ -88,14 +207,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 });
             })
             .catch(error => console.error('Error al cargar los roles:', error));
-    }
-
-    // Abrir el modal de edición y cargar los roles
-    function abrirModal(empleadoId) {
-        cargarRoles();
-        const modal = new bootstrap.Modal(document.getElementById('editRoleModal'));
-        modal.show();
-        window.empleadoId = empleadoId; // Guardamos el ID del empleado para usarlo al guardar
     }
 
     function guardarRol() {
@@ -117,21 +228,6 @@ document.addEventListener("DOMContentLoaded", function () {
             .catch(error => console.error('Error al actualizar el rol:', error));
     }
 
-    //Al dar click en guardar guarda el rol
-    document.querySelector('.btn-primary').addEventListener('click', function () {
-        guardarRol();
-    });
-
-    document.querySelector('.btn-secondary').addEventListener('click', function () {
-        const modal = bootstrap.Modal.getInstance(document.getElementById('editRoleModal'));
-        modal.hide(); // Cerrar el modal al hacer clic en "Cancelar"
-    });
-
-    // Detectar cuando el modal se cierra y recargar la tabla
-    const modalElement = document.getElementById('editRoleModal');
-    modalElement.addEventListener('hidden.bs.modal', function () {
-        cargarEmpleados(); 
-    });
 
     // Función para abrir el modal Ver Info
     function abrirModalVerInfo(empleadoId) {
@@ -201,7 +297,7 @@ document.addEventListener("DOMContentLoaded", function () {
             .then(response => response.json())
             .then(data => {
                 const selectFecha = document.getElementById('fechaSeleccionada');
-                selectFecha.innerHTML = ''; 
+                selectFecha.innerHTML = '';
                 data.forEach(fecha => {
                     const option = document.createElement("option");
                     option.value = fecha;
@@ -223,14 +319,14 @@ document.addEventListener("DOMContentLoaded", function () {
                 .then(response => response.json())
                 .then(data => {
                     const selectFuncion = document.getElementById('funcionSeleccionada');
-                    selectFuncion.innerHTML = ''; 
+                    selectFuncion.innerHTML = '';
                     const optionDefault = document.createElement("option");
                     optionDefault.value = "";
                     optionDefault.textContent = "Seleccione una función";
                     selectFuncion.appendChild(optionDefault);
                     data.forEach(funcion => {
                         const option = document.createElement("option");
-                        option.value = funcion.id; 
+                        option.value = funcion.id;
                         option.textContent = `Sala: ${funcion.sala.id} - Hora:${funcion.horario} - Peli: ${funcion.pelicula.titulo}`;
                         selectFuncion.appendChild(option);
                     });
@@ -238,7 +334,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 .catch(error => console.error('Error al cargar funciones:', error));
         }
     }
-
 
     // Función para asignar una función al empleado
     function asignarFuncion() {
@@ -277,7 +372,6 @@ document.addEventListener("DOMContentLoaded", function () {
         modal.style.display = 'none'; // Oculta el modal
     });
 
-
     function eliminarFuncionDeEmpleado(empleadoId, funcionId) {
         fetch(`http://localhost:8080/empleados/${empleadoId}/funciones/${funcionId}`, {
             method: 'DELETE',
@@ -298,6 +392,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 alert('Hubo un error al eliminar la relación');
             });
     }
+
+
+    //Modal para agregar empleado
 
     document.getElementById('btn-agregar-empleado').addEventListener('click', function () {
         document.getElementById('modalAgregarEmpleado').style.display = 'block';
@@ -347,7 +444,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         };
 
-        fetch('http://localhost:8080/empleados', { 
+        fetch('http://localhost:8080/empleados', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -374,9 +471,10 @@ document.addEventListener("DOMContentLoaded", function () {
             });
     }
 
-    function mostrarEmpleados(empleadosFiltrados) {
-        tablaEmpleados.innerHTML = ''; 
+    //BUSCADOR EMPLEADO
 
+    function mostrarEmpleados(empleadosFiltrados) {
+        tablaEmpleados.innerHTML = '';
         empleadosFiltrados.forEach(empleado => {
             const fila = document.createElement('tr');
 
@@ -400,61 +498,20 @@ document.addEventListener("DOMContentLoaded", function () {
     // Función para filtrar empleados
     function filtrarEmpleados() {
         const termino = document.querySelector('#buscadorEmpleados').value.toLowerCase();
-
         const empleadosFiltrados = empleadosTotal.filter(empleado =>
             empleado.nombre.toLowerCase().includes(termino) ||
             empleado.documento.includes(termino) ||
             empleado.rol.descripcion.toLowerCase().includes(termino)
         );
-
         mostrarEmpleados(empleadosFiltrados);
     }
 
     // Escuchar el evento de entrada en el buscador
     document.querySelector('#buscadorEmpleados').addEventListener('input', filtrarEmpleados);
 
-    // Cargar los empleados al iniciar
     cargarEmpleados();
 
     /**-------------------------------Seccion Peliculas------------------------------ */
-
-    menuPeliculas.addEventListener('click', function () {
-        vistaPeliculas.style.display = 'block';
-        vistaFunciones.style.display = 'none';
-        vistaEmpleados.style.display = 'none';
-        cargarPeliculas();  // Cargar las películas
-    });
-
-
-    // Cargar películas
-    function cargarPeliculas() {
-        fetch('http://localhost:8080/peliculas')
-            .then(response => response.json())
-            .then(data => {
-                tablaPeliculas.innerHTML = ''; 
-                data.forEach(pelicula => {
-                    const tr = document.createElement('tr');
-                    tr.innerHTML = `
-                        <td>${pelicula.titulo}</td>
-                        <td>${pelicula.duracion}</td>
-                        <td>${pelicula.sinopsis}</td>
-                        <td>${pelicula.genero.descripcion}</td>
-                        <td>
-                            <button class="eliminar" data-id="${pelicula.id}">Eliminar</button>
-                        </td>
-                    `;
-                    tablaPeliculas.appendChild(tr);
-                });
-
-                const botonesEliminar = document.querySelectorAll('.eliminar');
-                botonesEliminar.forEach(boton => {
-                    boton.addEventListener('click', function () {
-                        const id = this.getAttribute('data-id');
-                        eliminarPelicula(id);
-                    });
-                });
-            });
-    }
 
     function eliminarPelicula(id) {
         // Verificar si la película tiene funciones asociadas
@@ -463,9 +520,9 @@ document.addEventListener("DOMContentLoaded", function () {
             .then(tieneFunciones => {
                 if (tieneFunciones) {
                     alert('No se puede eliminar la película porque tiene funciones asociadas.');
-                    return; 
+                    return;
                 }
-    
+
                 // Si no tiene funciones, proceder a eliminar la película
                 fetch(`http://localhost:8080/peliculas/${id}`, {
                     method: 'DELETE',
@@ -545,7 +602,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 if (response.ok) {
                     alert('Película agregada exitosamente.');
                     formPelicula.reset();
-                    cargarPeliculas(); 
+                    cargarPeliculas();
                 } else {
                     console.error('Error al guardar la película:', response.statusText);
                 }
@@ -553,79 +610,60 @@ document.addEventListener("DOMContentLoaded", function () {
             .catch(error => console.error('Error al conectar con el servidor:', error));
     });
 
-    // Mostrar vista de Funciones
-    menuFunciones.addEventListener('click', function () {
-        vistaPeliculas.style.display = 'none';
-        vistaFunciones.style.display = 'block';
-        vistaEmpleados.style.display = 'none';
-        cargarFunciones();  // Cargar las funciones
-    });
 
+    //BUSCADOR DE PELICULAS 
 
+    function mostrarPeliculas(peliculasFiltradas) {
+        tablaPeliculas.innerHTML = '';
+        peliculasFiltradas.forEach(pelicula => {
+            const fila = document.createElement('tr');
+            fila.innerHTML = `
+                <td>${pelicula.titulo}</td>
+                <td>${pelicula.duracion}</td>
+                <td>${pelicula.sinopsis}</td>
+                <td>${pelicula.genero.descripcion}</td>
+                <td>
+                    <button class="eliminar" data-id="${pelicula.id}">Eliminar</button>
+                </td>
+                    `;
+            tablaPeliculas.appendChild(fila);
+        });
+        setupPeliculaEventListeners();
 
-
-
-
-
-
-
-
-
-
-
-    // Función para editar película
-    function editarPelicula(id) {
-        fetch(`/api/peliculas/${id}`)
-            .then(response => response.json())
-            .then(pelicula => {
-                document.getElementById('titulo').value = pelicula.titulo;
-                document.getElementById('director').value = pelicula.director;
-                document.getElementById('duracion').value = pelicula.duracion;
-                modalPelicula.style.display = 'flex';
-            });
     }
+
+    // Función para filtrar empleados
+    function filtrarPeliculas() {
+        const termino = buscadorPeliculas.value.toLowerCase();
+        const peliculasFiltradas = peliculasTotales.filter(pelicula =>
+            pelicula.titulo.toLowerCase().includes(termino) ||
+            pelicula.genero.descripcion.toLowerCase().includes(termino)
+        );
+        mostrarPeliculas(peliculasFiltradas);
+    }
+
+    buscadorPeliculas.addEventListener('input', filtrarPeliculas);
+    cargarPeliculas();
+
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // Implementación para Funciones
-function cargarFunciones() {
-    fetch('/funciones')
-        .then(response => response.json())
-        .then(data => {
-            tablaFunciones.innerHTML = '';
-            data.forEach(funcion => {
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td>${funcion.fecha}</td>
-                    <td>${funcion.hora}</td>
-                    <td>${funcion.pelicula ? funcion.pelicula.titulo : 'Sin película'}</td>
-                    <td>
-                        <button class="editar-funcion" data-id="${funcion.id}">Editar</button>
-                        <button class="eliminar-funcion" data-id="${funcion.id}">Eliminar</button>
-                    </td>
-                `;
-                tablaFunciones.appendChild(tr);
-            });
 
-            // Agregar event listeners para los botones
-            setupFuncionesEventListeners();
-        });
-}
-
-// Event listeners para Funciones
-function setupFuncionesEventListeners() {
-    document.querySelectorAll('.eliminar-funcion').forEach(boton => {
-        boton.addEventListener('click', function () {
-            const id = this.getAttribute('data-id');
-            eliminarFuncion(id);
-        });
-    });
-
-    document.querySelectorAll('.editar-funcion').forEach(boton => {
-        boton.addEventListener('click', function () {
-            const id = this.getAttribute('data-id');
-            editarFuncion(id);
-        });
-    });
-}
 
 // CRUD operations para Funciones
 function agregarFuncion(funcion) {
@@ -670,52 +708,52 @@ function eliminarFuncion(id) {
 
 
 // Búsqueda para todas las entidades
-function setupBuscadores() {
-    // Buscador de Películas
-    buscadorPeliculas.addEventListener('input', function (e) {
-        const busqueda = e.target.value.toLowerCase();
-        const filas = tablaPeliculas.getElementsByTagName('tr');
+// function setupBuscadores() {
+//     // Buscador de Películas
+//     buscadorPeliculas.addEventListener('input', function (e) {
+//         const busqueda = e.target.value.toLowerCase();
+//         const filas = tablaPeliculas.getElementsByTagName('tr');
 
-        Array.from(filas).forEach(fila => {
-            const titulo = fila.cells[0].textContent.toLowerCase();
-            const director = fila.cells[1].textContent.toLowerCase();
-            fila.style.display =
-                titulo.includes(busqueda) || director.includes(busqueda)
-                    ? ''
-                    : 'none';
-        });
-    });
+//         Array.from(filas).forEach(fila => {
+//             const titulo = fila.cells[0].textContent.toLowerCase();
+//             const director = fila.cells[1].textContent.toLowerCase();
+//             fila.style.display =
+//                 titulo.includes(busqueda) || director.includes(busqueda)
+//                     ? ''
+//                     : 'none';
+//         });
+//     });
 
-    // Buscador de Funciones
-    buscadorFunciones.addEventListener('input', function (e) {
-        const busqueda = e.target.value.toLowerCase();
-        const filas = tablaFunciones.getElementsByTagName('tr');
+//     // Buscador de Funciones
+//     buscadorFunciones.addEventListener('input', function (e) {
+//         const busqueda = e.target.value.toLowerCase();
+//         const filas = tablaFunciones.getElementsByTagName('tr');
 
-        Array.from(filas).forEach(fila => {
-            const fecha = fila.cells[0].textContent.toLowerCase();
-            const pelicula = fila.cells[2].textContent.toLowerCase();
-            fila.style.display =
-                fecha.includes(busqueda) || pelicula.includes(busqueda)
-                    ? ''
-                    : 'none';
-        });
-    });
+//         Array.from(filas).forEach(fila => {
+//             const fecha = fila.cells[0].textContent.toLowerCase();
+//             const pelicula = fila.cells[2].textContent.toLowerCase();
+//             fila.style.display =
+//                 fecha.includes(busqueda) || pelicula.includes(busqueda)
+//                     ? ''
+//                     : 'none';
+//         });
+//     });
 
-    // Buscador de Empleados
-    buscadorEmpleados.addEventListener('input', function (e) {
-        const busqueda = e.target.value.toLowerCase();
-        const filas = tablaEmpleados.getElementsByTagName('tr');
+//     // Buscador de Empleados
+//     buscadorEmpleados.addEventListener('input', function (e) {
+//         const busqueda = e.target.value.toLowerCase();
+//         const filas = tablaEmpleados.getElementsByTagName('tr');
 
-        Array.from(filas).forEach(fila => {
-            const nombre = fila.cells[0].textContent.toLowerCase();
-            const documento = fila.cells[1].textContent.toLowerCase();
-            fila.style.display =
-                nombre.includes(busqueda) || documento.includes(busqueda)
-                    ? ''
-                    : 'none';
-        });
-    });
-}
+//         Array.from(filas).forEach(fila => {
+//             const nombre = fila.cells[0].textContent.toLowerCase();
+//             const documento = fila.cells[1].textContent.toLowerCase();
+//             fila.style.display =
+//                 nombre.includes(busqueda) || documento.includes(busqueda)
+//                     ? ''
+//                     : 'none';
+//         });
+//     });
+// }
 
 // Inicialización
 document.addEventListener('DOMContentLoaded', function () {
