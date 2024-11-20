@@ -461,7 +461,6 @@ document.addEventListener("DOMContentLoaded", function () {
                         <td>${pelicula.sinopsis}</td>
                         <td>${pelicula.genero.descripcion}</td>
                         <td>
-                            <button class="editar" data-id="${pelicula.id}">Editar</button>
                             <button class="eliminar" data-id="${pelicula.id}">Eliminar</button>
                         </td>
                     `;
@@ -476,14 +475,6 @@ document.addEventListener("DOMContentLoaded", function () {
                         eliminarPelicula(id);
                     });
                 });
-
-                // const botonesEditar = document.querySelectorAll('.editar');
-                // botonesEditar.forEach(boton => {
-                //     boton.addEventListener('click', function () {
-                //         const id = this.getAttribute('data-id');
-                //         editarPelicula(id);
-                //     });
-                // });
             });
     }
 
