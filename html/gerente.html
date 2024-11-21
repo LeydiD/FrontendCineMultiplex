@@ -1,265 +1,379 @@
 <!DOCTYPE html>
 <html lang="es">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Gestión de Cine</title>
-    <link rel="stylesheet" href="../css/gerente.css">
-</head>
+    <link rel="stylesheet" href="../css/gerente.css" />
 
-<body>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Mogra&display=swap");
+      @import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Mogra&display=swap");
+    </style>
+  </head>
+  <body>
+    <header class="header">
+      <div class="header-left">
+        <img src="../img/palomitas.png" alt="Logo Cine" class="logo" />
+        <h1>Cine Multiplex</h1>
+      </div>
+      <div class="header-right">
+        <span id="usuarioNombre"></span>
+        <img
+          src="../img/exit.png"
+          alt="Salir"
+          class="logout-icon"
+          id="logoutButton"
+        />
+      </div>
+    </header>
+
     <!-- Menú lateral -->
     <aside class="sidebar">
-        <div class="sidebar-header">
-            <h2 id="nombre-gerente">Gerente: Juan Pérez</h2>
-        </div>
-        <ul class="menu">
-            <li><button id="menu-empleados" class="menu-btn">Empleados</button></li>
-            <li><button id="menu-peliculas" class="menu-btn">Películas</button></li>
-            <li><button id="menu-funciones" class="menu-btn">Funciones</button></li>
-        </ul>
+      <div class="sidebar-header"></div>
+      <ul class="menu">
+        <li><button id="menu-empleados" class="menu-btn">Empleados</button></li>
+        <li><button id="menu-peliculas" class="menu-btn">Películas</button></li>
+        <li><button id="menu-funciones" class="menu-btn">Funciones</button></li>
+      </ul>
     </aside>
 
     <!-- Área principal dinámica -->
     <main class="content">
-
-        <!-- Vista de Empleados -->
-        <div id="vista-empleados" class="vista">
-            <h2>Gestión de Empleados</h2>
-            <input type="text" id="buscadorEmpleados" class="buscador" placeholder="Buscar empleados...">
-            <button id="btn-agregar-empleado" class="btn-agregar">Agregar Empleado</button>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Nombre</th>
-                        <th>Documento</th>
-                        <th>Email</th>
-                        <th>Rol</th>
-                        <th>Funciones a Cargo</th>
-                    </tr>
-                </thead>
-                <tbody id="tabla-empleados"></tbody>
-            </table>
+      <!-- Vista de Empleados -->
+      <div id="vista-empleados" class="vista">
+        <h2>Gestión de Empleados</h2>
+        <div class="contenedor-buscador-btn">
+          <input
+            type="text"
+            id="buscadorEmpleados"
+            class="buscador"
+            placeholder="Buscar empleados..."
+          />
+          <button id="btn-agregar-empleado" class="btn-agregar">
+            Agregar Empleado
+          </button>
         </div>
 
-        <!-- Modal para actualizar rol de empleado -->
-        <div class="modal fade" id="editRoleModal" tabindex="-1" aria-labelledby="editRoleModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered"> <!-- Asegúrate de que esta clase esté presente -->
-                <div class="modal-content">
-                    <!-- Botón de cierre con la X -->
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <table>
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Documento</th>
+              <th>Email</th>
+              <th>Rol</th>
+              <th>Funciones a Cargo</th>
+            </tr>
+          </thead>
+          <tbody id="tabla-empleados"></tbody>
+        </table>
+      </div>
 
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="editRoleModalLabel">Editar Rol</h5>
-                    </div>
-                    <div class="modal-body">
-                        <!-- Contenido del modal -->
-                        <div class="form-group">
-                            <label for="rolSelect">Seleccionar Rol</label>
-                            <select id="rolSelect" class="form-select">
-                                <!-- Opciones de roles cargadas dinámicamente -->
-                            </select>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <!-- Botones de acción -->
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="button" class="btn btn-primary">Guardar</button>
-                    </div>
+      <!-- Modal para actualizar rol de empleado -->
+      <div
+        class="modal fade"
+        id="editRoleModal"
+        tabindex="-1"
+        aria-labelledby="editRoleModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-dialog-centered">
+          <!-- Asegúrate de que esta clase esté presente -->
+          <div class="modal-content">
+            <!-- Botón de cierre con la X -->
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+
+            <div class="modal-header">
+              <h5 class="modal-title" id="editRoleModalLabel">Editar Rol</h5>
+            </div>
+            <div class="modal-body">
+              <!-- Contenido del modal -->
+              <div class="form-group">
+                <label for="rolSelect">Seleccionar Rol</label>
+                <select id="rolSelect" class="form-select">
+                  <!-- Opciones de roles cargadas dinámicamente -->
+                </select>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <!-- Botones de acción -->
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Cancelar
+              </button>
+              <button type="button" class="btn btn-primary">Guardar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal Ver Info -->
+      <div id="modalVerInfo" class="modal">
+        <div class="modal-content">
+          <span class="close-btn-info">&times;</span>
+          <h2>Funciones del Empleado</h2>
+          <button class="asig_funcion">Asignar Función</button>
+          <!-- Tabla de Funciones del Empleado -->
+          <table id="tablaFuncionesEmpleado">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Fecha</th>
+                <th>Horario</th>
+                <th>Sala</th>
+                <th>Pelicula</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Las funciones se llenarán dinámicamente aquí -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Modal Asignar Función -->
+      <div id="modalAsignarFuncion" class="modal">
+        <div class="modal-content">
+          <span class="close-btn" class="cerrarModalAsig">&times;</span>
+          <h2>Asignar Función al Empleado</h2>
+
+          <!-- Combobox para seleccionar la fecha -->
+          <label for="fechaSeleccionada">Fecha:</label>
+          <select
+            id="fechaSeleccionada"
+            class="form-control1"
+            onchange="cargarFuncionesPorFecha()"
+          >
+            <!-- Las fechas disponibles se llenarán dinámicamente -->
+          </select>
+
+          <!-- Combobox para seleccionar la función -->
+          <label for="funcionSeleccionada">Función:</label>
+          <select id="funcionSeleccionada" class="form-control" disabled>
+            <!-- Las funciones disponibles para la fecha seleccionada se llenarán aquí -->
+          </select>
+
+          <button class="btn_asig_funcion">Asignar Función</button>
+          <button class="cerrarModalAsig">Cancelar</button>
+        </div>
+      </div>
+
+      <!-- Modal para AGREGAR EMPLEADO ------------------------------->
+      <div id="modalAgregarEmpleado" class="modal">
+        <div class="modal-content">
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+          <span class="cerrar-modal">&times;</span>
+          <h2>Agregar Empleado</h2>
+          <form id="form-agregar-empleado">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="empleado-nombre">Nombre:</label>
+                <input
+                  type="text"
+                  id="empleado-nombre"
+                  placeholder="Nombre del empleado"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="empleado-documento">Documento:</label>
+                <input
+                  type="text"
+                  id="empleado-documento"
+                  placeholder="Número de documento"
+                  required
+                />
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="empleado-email">Email:</label>
+                <input
+                  type="email"
+                  id="empleado-email"
+                  placeholder="Correo electrónico"
+                  required
+                />
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="empleado-rol">Rol:</label>
+                  <select id="empleado-rol" required>
+                    <option value="" disabled selected>
+                      Seleccione un rol
+                    </option>
+                    <!-- Los roles se cargarán dinámicamente -->
+                  </select>
                 </div>
+              </div>
             </div>
-        </div>
 
-        <!-- Modal Ver Info -->
-        <div id="modalVerInfo" class="modal">
-            <div class="modal-content">
-                <span class="close-btn-info">&times;</span>
-                <h2>Funciones del Empleado</h2>
-                <button class="asig_funcion">Asignar Función</button>
-                <!-- Tabla de Funciones del Empleado -->
-                <table id="tablaFuncionesEmpleado">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Fecha</th>
-                            <th>Horario</th>
-                            <th>Sala</th>
-                            <th>Pelicula</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- Las funciones se llenarán dinámicamente aquí -->
-                    </tbody>
-                </table>
-
-
+            <div class="form-group">
+              <label for="empleado-contrasena">Contraseña:</label>
+              <input
+                type="password"
+                id="empleado-contrasena"
+                placeholder="Contraseña"
+                required
+              />
             </div>
+
+            <button
+              type="button"
+              class="btn btn-primary_guardar"
+              id="btn btn-primary_guardar"
+            >
+              Guardar
+            </button>
+          </form>
         </div>
+      </div>
 
-        <!-- Modal Asignar Función -->
-        <div id="modalAsignarFuncion" class="modal">
-            <div class="modal-content">
-                <span class="close-btn" class="cerrarModalAsig">&times;</span>
-                <h2>Asignar Función al Empleado</h2>
+      <!------------------------Seccion peliculas---------------------------------------------------->
+      <!-- Vista de Películas -->
+      <div id="vista-peliculas" class="vista">
+        <h2>Gestión de Películas</h2>
+        <div class="contenedor-buscador-btn">
+          <input
+            type="text"
+            id="buscador-peliculas"
+            class="buscador"
+            placeholder="Buscar películas..."
+          />
+          <button id="btn-agregar-pelicula" class="btn-agregar">
+            Nueva Película
+          </button>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Título</th>
+              <th>Duración</th>
+              <th>Sinopsis</th>
+              <th>Genero</th>
+            </tr>
+          </thead>
+          <tbody id="tabla-peliculas"></tbody>
+        </table>
+      </div>
 
-                <!-- Combobox para seleccionar la fecha -->
-                <label for="fechaSeleccionada">Fecha:</label>
-                <select id="fechaSeleccionada" class="form-control1" onchange="cargarFuncionesPorFecha()">
-                    <!-- Las fechas disponibles se llenarán dinámicamente -->
+      <!-- Modal para agregar películas -->
+      <div id="modal-pelicula" class="modal">
+        <div class="modal-content">
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+          <span class="cerrar-modal">&times;</span>
+          <h2>Agregar Película</h2>
+          <form id="form-pelicula">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="titulo_agregar">Título:</label>
+                <input type="text" id="titulo_agregar" required />
+              </div>
+
+              <div class="form-group">
+                <label for="duracion_agregar">Duracion:</label>
+                <input type="text" id="duracion_agregar" required />
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="sinopsis_agregar">Sinopsis:</label>
+                <input type="text" id="sinopsis_agregar" required />
+              </div>
+              <div class="form-group">
+                <select id="genero-pelicula_agregar" required>
+                  <!-- Los roles se cargarán dinámicamente -->
                 </select>
-
-                <!-- Combobox para seleccionar la función -->
-                <label for="funcionSeleccionada">Función:</label>
-                <select id="funcionSeleccionada" class="form-control" disabled>
-                    <!-- Las funciones disponibles para la fecha seleccionada se llenarán aquí -->
-                </select>
-
-                <button class="btn_asig_funcion">Asignar Función</button>
-                <button class="cerrarModalAsig">Cancelar</button>
+              </div>
             </div>
+
+            <button type="submit">Guardar</button>
+            <!--button id="cerrarModalPelicula">Cancelar</button-->
+          </form>
+        </div>
+      </div>
+
+      <!------- Vista de Funciones ----------->
+      <div id="vista-funciones" class="vista">
+        <h2>Gestión de Funciones</h2>
+        <div class="contenedor-buscador-btn">
+          <input
+            type="text"
+            id="buscador-funciones"
+            class="buscador"
+            placeholder="Buscar funciones..."
+          />
+          <button id="btn-agregar-funcion" class="btn-agregar">
+            Nueva Función
+          </button>
         </div>
 
+        <table>
+          <thead>
+            <tr>
+              <th>Id</th>
+              <th>Horario</th>
+              <th>Fecha</th>
+              <th>Pelicula</th>
+              <th>Sala</th>
+              <th>Tipo Proyección</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="tabla-funciones"></tbody>
+        </table>
+      </div>
 
-        <!-- Modal para agregar empleado -->
-        <div id="modalAgregarEmpleado" class="modal" style="display: none;">
-            <div class="modal-content">
-                <span class="cerrar-modal">&times;</span>
-                <h2>Agregar Empleado</h2>
-                <form id="form-agregar-empleado">
-                    <div class="form-group">
-                        <label for="empleado-nombre">Nombre:</label>
-                        <input type="text" id="empleado-nombre" placeholder="Nombre del empleado" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="empleado-documento">Documento:</label>
-                        <input type="text" id="empleado-documento" placeholder="Número de documento" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="empleado-email">Email:</label>
-                        <input type="email" id="empleado-email" placeholder="Correo electrónico" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="empleado-rol">Rol:</label>
-                        <select id="empleado-rol" required>
-                            <!-- Los roles se cargarán dinámicamente -->
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="empleado-contrasena">Contraseña:</label>
-                        <input type="password" id="empleado-contrasena" placeholder="Contraseña" required>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary cerrar-modal">Cancelar</button>
-                        <button type="button" class="btn btn-primary_guardar"
-                            id="btn btn-primary_guardar">Guardar</button>
-                    </div>
-                </form>
+      <!-- Modal de Función -->
+      <div id="modal-funcion" class="modal" style="display: none">
+        <div class="modal-content">
+          <span class="cerrar-modal">&times;</span>
+          <h2>Gestionar Función</h2>
+          <form id="form-funcion">
+            <div class="form-group">
+              <label for="funcion-fecha">Fecha:</label>
+              <input type="date" id="funcion-fecha" required />
             </div>
-        </div>
-
-        <!------------------------Seccion peliculas---------------------------------------------------->
-        <!-- Vista de Películas -->
-        <div id="vista-peliculas" class="vista">
-            <h2>Gestión de Películas</h2>
-            <input type="text" id="buscador-peliculas" class="buscador" placeholder="Buscar películas...">
-            <button id="btn-agregar-pelicula" class="btn-agregar">Nueva Película</button>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Título</th>
-                        <th>Duración</th>
-                        <th>Sinopsis</th>
-                        <th>Genero</th>
-                    </tr>
-                </thead>
-                <tbody id="tabla-peliculas"></tbody>
-            </table>
-        </div>
-
-        <!-- Modal para agregar películas -->
-        <div id="modal-pelicula" class="modal" style="display: none;">
-            <div class="modal-content">
-                <span class="cerrar-modal">&times;</span>
-                <h2>Agregar Película</h2>
-                <form id="form-pelicula">
-                    <label for="titulo_agregar">Título:</label>
-                    <input type="text" id="titulo_agregar" required>
-
-                    <label for="duracion_agregar">Duracion:</label>
-                    <input type="text" id="duracion_agregar" required>
-
-                    <label for="sinopsis_agregar">Sinopsis:</label>
-                    <input type="text" id="sinopsis_agregar" required>
-
-                    <select id="genero-pelicula_agregar" required>
-                        <!-- Los roles se cargarán dinámicamente -->
-                    </select>
-                    
-
-                    <button type="submit">Guardar</button>
-                    <button id="cerrarModalPelicula">Cancelar</button>
-                </form>
+            <div class="form-group">
+              <label for="funcion-hora">Hora:</label>
+              <input type="time" id="funcion-hora" required />
             </div>
-        </div>
-
-
-        <!-- Vista de Funciones -->
-        <div id="vista-funciones" class="vista">
-            <h2>Gestión de Funciones</h2>
-            <input type="text" id="buscador-funciones" class="buscador" placeholder="Buscar funciones...">
-            <button id="btn-agregar-funcion" class="btn-agregar">Nueva Función</button>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Id</th>
-                        <th>Horario</th>
-                        <th>Fecha</th>
-                        <th>Pelicula</th>
-                        <th>Sala</th>
-                        <th>Tipo Proyección</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody id="tabla-funciones"></tbody>
-            </table>
-        </div>
-
-
-
-        <!-- Modal de Función -->
-        <div id="modal-funcion" class="modal">
-            <div class="modal-content">
-                <span class="cerrar-modal">&times;</span>
-                <h2>Gestionar Función</h2>
-                <form id="form-funcion">
-                    <div class="form-group">
-                        <label for="funcion-fecha">Fecha:</label>
-                        <input type="date" id="funcion-fecha" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="funcion-hora">Hora:</label>
-                        <input type="time" id="funcion-hora" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="funcion-sala">Sala:</label>
-                        <input type="number" id="funcion-sala" required min="1">
-                    </div>
-                    <div class="form-group">
-                        <label for="funcion-pelicula">Película:</label>
-                        <select id="funcion-pelicula" required></select>
-                    </div>
-                    <button type="submit">Guardar</button>
-                </form>
+            <div class="form-group">
+              <label for="funcion-sala">Sala:</label>
+              <input type="number" id="funcion-sala" required min="1" />
             </div>
+            <div class="form-group">
+              <label for="funcion-pelicula">Película:</label>
+              <select id="funcion-pelicula" required></select>
+            </div>
+            <button type="submit">Guardar</button>
+          </form>
         </div>
-
-        </div>
-
-        <script src="../js/gerente.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-
+      </div>
+    </main>
+    <script src="../js/gerente.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
 </html>

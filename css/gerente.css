@@ -1,158 +1,310 @@
 /* Estilos para el menú lateral */
-.sidebar {
-    width: 250px;
-    background-color: #333;
-    color: white;
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 100%;
-    padding: 20px;
-    box-sizing: border-box;
+/* Elimina márgenes y padding globales */
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box; /* Asegura un modelo de caja consistente */
 }
 
-.sidebar-header h2 {
-    text-align: center;
-    margin-bottom: 20px;
+/* Estilos para el header */
+.header {
+  position: fixed;
+  top: 0;
+  left: 0; /* Fija el header desde el borde izquierdo */
+  width: 100%; /* Asegura que ocupe todo el ancho del viewport */
+  box-sizing: border-box; /* Incluye padding y border en el ancho total */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 2rem;
+  background-color: #000000;
+  color: #fff;
+  z-index: 1000;
+  height: 9%; /* Ajusta la altura del header */
+}
+
+.header-left {
+  display: flex;
+  align-items: center; /* Asegura que el logo y el título estén alineados verticalmente */
+}
+
+.header-left .logo {
+  width: 10%;
+  height: auto;
+  margin-right: 1rem;
+}
+
+.header-left h1 {
+  font-family: "Mogra", serif;
+  font-size: 30px;
+  color: #ffd700;
+  margin: 0; /* Elimina márgenes extra */
+}
+
+.header-right {
+  display: flex;
+  align-items: center; /* Alinea verticalmente los elementos del lado derecho */
+  justify-content: flex-end; /* Asegura que los elementos estén alineados a la derecha */
+  gap: 1rem;
+  flex-grow: 1; /* Permite que tome el espacio sobrante y empuje los elementos hacia la derecha */
+}
+
+.logout-icon {
+  width: 7%; /* Ajusta el tamaño exacto del ícono */
+  height: 7%;
+  cursor: pointer;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.logout-icon:hover {
+  transform: scale(1.1); /* Agranda el ícono al pasar el mouse */
+  opacity: 0.8; /* Disminuye ligeramente la opacidad */
+}
+
+#usuarioNombre {
+  /* font-family: "Mogra", sans-serif; /* Fuente personalizada */
+  font-family: "DM Sans", sans-serif;
+  font-size: 18px; /* Tamaño de fuente */
+  color: #dae8ea; /* Color dorado */
+  text-transform: uppercase; /* Convierte el texto a mayúsculas */
+  letter-spacing: 1px; /* Espaciado entre letras */
+  margin-right: 10px; /* Espaciado con respecto al icono */
+}
+
+.sidebar {
+  width: 240px;
+  background-color: #202020;
+  color: white;
+  position: fixed;
+  height: 100%;
+  padding: 20px 10px;
+  height: calc(100% - 60px); /* Ajusta la altura para excluir el header */
+  box-sizing: border-box;
+  margin-top: 60px;
+}
+
+
+h2 {
+  font-family: "DM Sans", sans-serif;
+  text-align: center;
+  font-size: 30px;
 }
 
 .menu {
-    list-style: none;
-    padding: 0;
+  list-style: none;
+  padding: 0;
 }
 
 .menu li {
-    margin: 10px 0;
+  margin: 10px 0;
 }
 
 .menu-btn {
-    width: 100%;
-    padding: 10px;
-    background-color: #444;
-    border: none;
-    color: white;
-    font-size: 16px;
-    text-align: left;
-    cursor: pointer;
-    border-radius: 4px;
+  background: none;
+  border: none;
+  color: #ecf0f1;
+  font-size: 18px;
+  text-align: left;
+  padding: 30px 15px;
+  width: 100%;
+  display: block;
+  border-radius: 5px;
+  margin: 10px 0;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
 
 .menu-btn:hover {
-    background-color: #555;
+  background-color: #555;
 }
 
 /* Estilos para el área principal */
 .content {
-    margin-left: 260px;
-    padding: 20px;
+  margin-left: 260px;
+  padding: 20px;
 }
 
 .vista {
-    display: none;
+  display: none;
+  margin-top: 8%;
 }
 
-/* Estilos para el buscador */
+/* Contenedor que agrupa el buscador y el botón */
+.contenedor-buscador-btn {
+  display: flex; /* Activa flexbox */
+  justify-content: center; /* Centra horizontalmente */
+  align-items: center; /* Alinea verticalmente */
+  gap: 10px; /* Espacio entre el buscador y el botón */
+  margin: 20px 0; /* Espaciado superior e inferior */
+}
+
+/* Estilos del buscador */
 .buscador {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 20px;
-    border-radius: 4px;
-    border: 1px solid #ccc;
+  width: 70%; /* Tamaño del buscador */
+  padding: 10px 15px; /* Espaciado interno */
+  font-size: 16px; /* Tamaño de texto */
+  border: 1px solid #ccc; /* Borde sutil */
+  border-radius: 4px; /* Bordes redondeados */
+  transition: all 0.3s ease; /* Transición para efectos */
+}
+
+.buscador:focus {
+  outline: none;
+  border-color: #868789; /* Color azul para el borde al enfocar */
+  box-shadow: 0 0 5px rgba(255, 38, 0, 0.5); /* Sombra azul */
+}
+/* Estilos del botón */
+.btn-agregar {
+  padding: 10px 20px; /* Tamaño del botón */
+  background-color: #ed3a3a;
+  color: white; /* Color del texto */
+  font-size: 16px; /* Tamaño de texto */
+  border: none; /* Sin borde */
+  border-radius: 4px; /* Bordes redondeados */
+  cursor: pointer; /* Cursor de puntero */
+  transition: all 0.3s ease;
+}
+
+.btn-agregar:hover {
+  background-color: #d31103; /* Color al pasar el ratón */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra al pasar el ratón */
+  transform: translateY(-2px); /* Levantamiento */
+}
+
+.btn-agregar:active {
+  background-color: #7e281e; /* Color más oscuro al hacer clic */
+  transform: translateY(0); /* Sin levantamiento */
 }
 
 /* Estilos para la tabla */
 table {
-    width: 100%;
-    border-collapse: collapse;
+  width: 100%;
+  border-collapse: collapse;
 }
 
-table, th, td {
-    border: 1px solid #ccc;
+table,
+th,
+td {
+  border: 1px solid #ccc;
 }
 
-th, td {
-    padding: 10px;
-    text-align: left;
+th,
+td {
+  padding: 10px;
+  text-align: left;
 }
 
 th {
-    background-color: #f4f4f4;
+  background-color: #f4f4f4;
+}
+
+/*CUANDO PASA EL CORSOR?*/
+table tr:hover {
+  background-color: #ecf0f1;
+  color: #2c3e50;
 }
 
 button {
-    padding: 5px 10px;
-    background-color: #f44336;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
+  padding: 5px 10px;
+  background-color: #f44336;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
 button:hover {
-    background-color: #d32f2f;
+  background-color: #d32f2f;
 }
 
-/* Estilos para el modal */
+/*--------------- Estilos para los modales ------------------*/
+
 .modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: none;
-    justify-content: center;
-    align-items: center;
-}
-
-.modal-content {
-    background-color: white;
-    padding: 20px;
-    border-radius: 4px;
-    width: 400px;
-}
-
-.cerrar-modal {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    font-size: 20px;
-    cursor: pointer;
-}
-
-
-/* Estilo para el modal */
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.4); /* Fondo semitransparente */
-    justify-content: center;
-    align-items: center;
+  display: none;
+  position: fixed;
+  left: 0;
+  top: 0;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4); /* Fondo semitransparente */
+  z-index: 1;
 }
 
 /* Contenido del modal */
 .modal-content {
-    background-color: white;
-    padding: 20px;
-    border-radius: 10px;
-    width: 50%;
-    margin: auto;
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 50%;
+  max-height: 60%; /* Limita la altura máxima del modal */
+  margin: auto;
+  position: fixed;
+  top: 50%; /* Coloca el modal en el centro vertical */
+  transform: translateY(-50%); /* Centra el modal verticalmente */
+  overflow-y: auto;
+}
+/* Estilo para los grupos de formularios */
+.form-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px; /* Ajusta el espacio entre las columnas */
 }
 
-/* Botón para cerrar */
-.close-btn {
-    position: absolute;
-    top: 10px;
-    right: 20px;
-    font-size: 30px;
-    cursor: pointer;
+/* Estilo para los grupos de formulario (form-group) */
+.form-group {
+  flex: 1 1 45%; /* 45% de ancho, y ajustable si es necesario */
+  max-width: 400px; /* Ancho mínimo para evitar que los inputs se estiren demasiado */
+  margin-bottom: 15px; /* Espaciado entre los elementos de formulario */
 }
 
+/* Estilo de los inputs y selects */
+.form-group input,
+.form-group select {
+  width: 100%; /* Asegura que el input ocupe el 100% del ancho de su contenedor */
+  padding: 10px;
+  font-size: 15px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  box-sizing: border-box; /* Asegura que el padding no afecte el ancho total */
+}
 
+/* Alineación de etiquetas */
+.form-group label {
+  font-size: 18px;
+  display: block;
+  margin-bottom: 5px; /* Espacio entre la etiqueta y el input/select */
+}
 
+/* Botón para cerrar el modal */
+.close-btn,
+.cerrar-modal {
+  position: absolute;
+  top: 10px;
+  right: 30px;
+  font-size: 30px;
+  cursor: pointer;
+}
+
+/* Estilos para el botón de guardar */
+.btn-primary_guardar {
+  padding: 10px 20px;
+  background-color: #f44336;
+  color: white;
+  font-size: 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
+  display: inline-block;
+  text-align: center;
+  margin-top: 15px;
+}
+
+.btn-primary_guardar:hover {
+  background-color: #d32f2f;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra al pasar el ratón */
+  transform: translateY(-2px); /* Levantamiento del botón */
+}
