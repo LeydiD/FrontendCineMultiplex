@@ -1,0 +1,212 @@
+/* gerente.css */
+
+body {
+  margin: 0;
+  font-family: "DM Sans", sans-serif;
+  background-color: #f4f4f4;
+  color: #333;
+  display: flex;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 250px;
+  background-color: #2b2d42;
+  color: white;
+  height: 100vh;
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 0;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.sidebar-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.sidebar-header img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 3px solid #ef233c;
+}
+
+.sidebar-header h3 {
+  margin: 10px 0 5px;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.sidebar-header p {
+  font-size: 0.9rem;
+  color: #d3d3d3;
+}
+
+.menu {
+  list-style-type: none;
+  padding: 0;
+  width: 100%;
+}
+
+.menu li {
+  width: 100%;
+}
+
+.menu-btn {
+  width: 100%;
+  padding: 15px;
+  text-align: left;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.menu-btn:hover {
+  background-color: #ef233c;
+}
+
+/* Main content */
+.content {
+  margin-left: 250px;
+  padding: 20px;
+  flex: 1;
+}
+
+.vista {
+  display: none;
+}
+
+.vista.active {
+  display: block;
+}
+
+/* Buttons and inputs */
+.buscador {
+  padding: 10px;
+  width: calc(100% - 120px);
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+
+.btn-agregar {
+  background-color: #ef233c;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.btn-agregar:hover {
+  background-color: #d90429;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  background-color: white;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+table th,
+table td {
+  padding: 15px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+table th {
+  background-color: #2b2d42;
+  color: white;
+}
+
+table tr:hover {
+  background-color: #f1f1f1;
+}
+
+/* Modals */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 400px;
+  max-width: 90%;
+  position: relative;
+}
+
+.modal-content h2 {
+  margin: 0 0 15px;
+  font-size: 1.5rem;
+  color: #2b2d42;
+}
+
+.cerrar-modal {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #d90429;
+}
+
+.cerrar-modal:hover {
+  color: #ef233c;
+}
+
+/* Form fields */
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.btn-guardar {
+  background-color: #2b2d42;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.btn-guardar:hover {
+  background-color: #ef233c;
+}
