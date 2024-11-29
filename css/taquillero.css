@@ -1,0 +1,517 @@
+body {
+  font-family: "DM Sans", sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background: url("../img/fondo4.jpg") no-repeat center center fixed;
+  background-size: cover;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between; /* Distribuye los elementos del header entre los extremos */
+  align-items: center; /* Alinea verticalmente todos los elementos del header */
+  padding: 0.5rem 2rem;
+  background-color: #000000;
+  color: #fff;
+}
+
+.header-left {
+  display: flex;
+  align-items: center; /* Asegura que el logo y el título estén alineados verticalmente */
+}
+
+.header-left .logo {
+  width: 10%;
+  height: auto;
+  margin-right: 1rem;
+}
+
+.header-left h1 {
+  font-family: "Mogra", serif;
+  font-size: 30px;
+  color: #ffd700;
+  margin: 0; /* Elimina márgenes extra */
+}
+
+.header-right {
+  display: flex;
+  align-items: center; /* Alinea verticalmente los elementos del lado derecho */
+  justify-content: flex-end; /* Asegura que los elementos estén alineados a la derecha */
+  gap: 1rem;
+  flex-grow: 1; /* Permite que tome el espacio sobrante y empuje los elementos hacia la derecha */
+}
+
+.logout-icon {
+  width: 10%; /* Ajusta el tamaño exacto del ícono */
+  height: 10%;
+  cursor: pointer;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.logout-icon:hover {
+  transform: scale(1.1); /* Agranda el ícono al pasar el mouse */
+  opacity: 0.8; /* Disminuye ligeramente la opacidad */
+}
+
+#usuarioNombre {
+  font-family: "Mogra", sans-serif;
+  font-size: 18px;
+  color: #dae8ea;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-right: 10px;
+}
+
+.ticket-booking-container {
+  max-width: 900px;
+  margin: 2rem auto;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgb(255, 255, 255);
+}
+
+.ticket-booking-card {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.ticket-booking-card-header {
+  background-color: #db9d17;
+  color: white;
+  padding: 10px;
+  text-align: center;
+  font-size: 20px;
+  font-family: "Mogra", cursive;
+}
+
+.ticket-booking-card-content {
+  padding: 20px;
+}
+
+.date-selector {
+  margin-bottom: 20px;
+  text-align: center;
+}
+.date-selector input[type="date"] {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  text-align: center;
+}
+
+.movie-show-selector,
+.category-selector,
+#payment-method-select {
+  margin-bottom: 20px;
+  text-align: center;
+  width: 55%;
+  padding: 8px;
+  border-radius: 4px;
+  margin: 0 auto;
+  display: block;
+  margin-bottom: 20px;
+}
+
+.movie-show-select-trigger,
+.category-select-trigger {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+  text-align: center;
+  display: block;
+}
+
+.movie-show-info {
+  margin-top: 30px;
+  margin-bottom: 15px;
+  text-align: center;
+  background-color: #ffffff;
+  border: 2px solid #dacead;
+  border-radius: 8px;
+  padding: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 80%;
+  max-width: 600px;
+  margin: 30px auto;
+}
+
+.seat-legend {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.seat-legend-item {
+  display: flex;
+  align-items: center;
+  margin: 0 10px;
+}
+
+.seat-legend-color {
+  width: 20px;
+  height: 20px;
+  margin-right: 5px;
+  border-radius: 4px;
+}
+
+.theater-seating-layout {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.seat-row {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.theater-seat {
+  width: 40px;
+  height: 40px;
+  border-radius: 6px;
+  margin: 2px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.seat-available {
+  background-color: rgb(12, 188, 12);
+  color: white;
+}
+
+.seat-occupied {
+  background-color: rgb(218, 12, 12);
+  color: white;
+  cursor: not-allowed;
+}
+
+.seat-selected {
+  background-color: rgb(43, 123, 244);
+  color: black;
+}
+
+.theater-screen {
+  margin-top: 20px;
+  width: 60%;
+  height: 30px;
+  background-color: #333;
+  color: white;
+  text-align: center;
+  margin: 0 auto 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+}
+
+.booking-summary {
+  text-align: center;
+}
+
+.snacks-toggle {
+  margin: 20px 0;
+  text-align: center;
+}
+
+.snacks-toggle input[type="checkbox"] {
+  margin-right: 10px;
+  transform: scale(1.2);
+  cursor: pointer;
+}
+
+.snacks-toggle label {
+  font-size: 16px;
+  color: #333;
+  font-weight: bold;
+}
+
+.snack-card input[type="number"] {
+  width: 60px;
+  padding: 4px;
+  text-align: center;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin: 0;
+}
+/* Contenedor de la sección de snacks */
+#snacks-section {
+  margin-top: 20px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f8f8f8;
+  width: 90%;
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Título de la sección de snacks */
+#snacks-section h2 {
+  font-size: 30px;
+  font-family: "Mogra", serif;
+  font-weight: bold;
+  margin-bottom: 10px;
+  text-align: center;
+  margin: 5%;
+}
+
+/* Estilos para el input del buscador de snacks */
+.buscador {
+  width: 100%;
+  max-width: 600px;
+  padding: 12px 20px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  outline: none;
+  background-color: #fff;
+  transition: border-color 0.3s ease;
+  margin: 0 auto;
+  display: block;
+}
+
+.buscador:focus {
+  border-color: #db9d17;
+  box-shadow: 0 0 5px rgba(219, 157, 23, 0.5);
+}
+
+#snack-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 15px;
+  margin-top: 10px;
+  padding: 0 10px;
+}
+
+/* Estilo de cada card de snack */
+.snack-card {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  padding: 12px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: auto;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  overflow: hidden;
+  position: relative;
+}
+
+.snack-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 15px rgba(222, 197, 31, 0.3);
+  border-color: #ebcf5f;
+}
+
+.snack-card h3 {
+  font-size: 18px;
+  font-family: "Mogra", cursive;
+  margin-bottom: 8px;
+  color: #f16b05;
+  font-weight: bold;
+  text-transform: capitalize;
+}
+
+.snack-card p {
+  font-size: 13px;
+  margin-bottom: 8px;
+  color: #464343;
+  line-height: 1.3;
+}
+
+.snack-card .quantity-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+.snack-card.disabled {
+  background-color: #e6e6e6;
+  color: #aaa;
+  pointer-events: none;
+}
+
+.snack-card.disabled p {
+  color: #888;
+}
+
+/* Total por snacks */
+#snack-total-container {
+  margin-top: 20px;
+  text-align: right;
+}
+
+#snack-total {
+  font-size: 16px;
+  padding: 5px 10px;
+  background-color: #f0f0f0;
+  border: none;
+  font-weight: bold;
+}
+
+.calculate-total-button,
+.buscar-cliente button {
+  background-color: #eab059;
+  color: #333;
+  font-size: 14px;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: auto;
+  margin: 15px 0;
+  display: inline-block;
+}
+
+.calculate-total-button:hover,
+.buscar-cliente button:hover,
+#register-client-form button:hover {
+  background-color: #e88b27;
+  transform: scale(1.05);
+}
+
+.calculate-total-button:focus {
+  outline: none;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+}
+
+/* Estilos para la sección de buscar cliente */
+.buscar-cliente {
+  margin-top: 30px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: center;
+}
+
+.buscar-cliente input[type="text"] {
+  width: 150px;
+  padding: 6px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 12px;
+  color: #333;
+  box-sizing: border-box;
+}
+
+/* Estilos para el formulario de registrar cliente */
+#register-client-form {
+  display: none;
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  width: 100%;
+  max-width: 400px;
+  margin: 20px auto;
+}
+
+#register-client-form label {
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 5px;
+  display: block;
+  font-family: "DM Sans", sans-serif;
+}
+
+#register-client-form input[type="text"],
+#register-client-form input[type="email"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  color: #333;
+  box-sizing: border-box;
+}
+
+#register-client-form button {
+  background-color: #f1c27d;
+  color: #333;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
+  font-family: "DM Sans", sans-serif;
+  width: 100%;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.reserve-button,
+#confirm-order {
+  background-color: #df810f;
+  color: white;
+  padding: 12px 24px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  text-align: center;
+  display: inline-block;
+}
+
+.reserve-button:hover {
+  background-color: #b7690a;
+}
+
+.reserve-button:disabled {
+  background-color: #ccc;
+  color: #666;
+  cursor: not-allowed;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+  background-color: #fefefe;
+  text-align: center;
+  justify-content: center;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 50%;
+  border-radius: 8px;
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}

@@ -7,11 +7,13 @@ document.addEventListener("DOMContentLoaded", function () {
   const formPelicula = document.getElementById("form-pelicula");
   const vistaEmpleados = document.getElementById("vista-empleados");
   const vistaFunciones = document.getElementById("vista-funciones");
+  const vistaClientes = document.getElementById("vista-clientes");
 
   menuPeliculas.addEventListener("click", function () {
     vistaPeliculas.style.display = "block";
     vistaFunciones.style.display = "none";
     vistaEmpleados.style.display = "none";
+    vistaClientes.style.display = "none";
     cargarPeliculas();
   });
 
@@ -30,7 +32,10 @@ document.addEventListener("DOMContentLoaded", function () {
                             <td>${pelicula.sinopsis}</td>
                             <td>${pelicula.genero.descripcion}</td>
                             <td>
-                                <img src="../img/delete.png" class="eliminar-pelicula" data-id="${pelicula.id}" />
+                             <div class="accion-contenedor">
+                              <img src="../img/delete.png" class="eliminar-pelicula" data-id="${pelicula.id}" />
+                              <span class="tooltip-text">Eliminar</span>
+                             </div>
                             </td>
                         `;
           tablaPeliculas.appendChild(tr);
@@ -48,8 +53,6 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     });
   }
-
-  // Me permite eliminar la película
 
   function eliminarPelicula(id) {
     fetch(`http://localhost:8080/peliculas/${id}/tiene-funciones`)
@@ -87,13 +90,16 @@ document.addEventListener("DOMContentLoaded", function () {
       });
   }
 
-  // Cargar géneros desde el backend
   function cargarGeneros() {
     fetch("http://localhost:8080/generos")
       .then((response) => response.json())
       .then((data) => {
         const generoSelect = document.getElementById("genero-pelicula_agregar");
-        generoSelect.innerHTML = " "; // Agregar opción predeterminada
+        generoSelect.innerHTML = " ";
+        const optionDefault = document.createElement("option");
+        optionDefault.value = "";
+        optionDefault.textContent = "Seleccione un genero";
+        generoSelect.appendChild(optionDefault);
         data.forEach((genero) => {
           const option = document.createElement("option");
           option.value = genero.id;
@@ -154,7 +160,10 @@ document.addEventListener("DOMContentLoaded", function () {
                         <td>${pelicula.sinopsis}</td>
                         <td>${pelicula.genero.descripcion}</td>
                         <td>
-                            <button class="eliminar" data-id="${pelicula.id}">Eliminar</button>
+                            <div class="accion-contenedor">
+                              <img src="../img/delete.png" class="eliminar-pelicula" data-id="${pelicula.id}" />
+                              <span class="tooltip-text">Eliminar</span>
+                             </div>
                         </td>
                             `;
       tablaPeliculas.appendChild(fila);

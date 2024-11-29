@@ -4,10 +4,12 @@ document.addEventListener("DOMContentLoaded", function () {
   const tablaEmpleados = document.getElementById("tabla-empleados");
   const vistaPeliculas = document.getElementById("vista-peliculas");
   const vistaFunciones = document.getElementById("vista-funciones");
+  const vistaClientes = document.getElementById("vista-clientes");
 
   menuEmpleados.addEventListener("click", function () {
     vistaPeliculas.style.display = "none";
     vistaFunciones.style.display = "none";
+    vistaClientes.style.display = "none";
     vistaEmpleados.style.display = "block";
     cargarEmpleados();
   });
@@ -19,7 +21,6 @@ document.addEventListener("DOMContentLoaded", function () {
   const modalEditRole = document.getElementById("editRoleModal");
   const closeModalEditRole = modalEditRole.querySelector(".cerrar-modal");
 
-  // Función para mostrar el modal y cargar roles
   function abrirModalEditRole(empleadoId) {
     cargarRoles();
     modalEditRole.style.display = "flex";
@@ -83,7 +84,6 @@ document.addEventListener("DOMContentLoaded", function () {
     window.empleadoId = empleadoId;
   }
 
-  // -----------------------------------------------------Funciones-----------------------------------------------------
   function cargarEmpleados() {
     fetch("http://localhost:8080/empleados")
       .then((response) => response.json())
@@ -100,9 +100,18 @@ document.addEventListener("DOMContentLoaded", function () {
                         ${empleado.rol.descripcion}
                         </td>
                         <td>
-                            <img src="../img/info.png" class="ver-info" data-id="${empleado.id}" />
-                            <img src="../img/edit2.png" class="editar-empleado" data-id="${empleado.id}" />
-                            <img src="../img/delete.png" class="eliminar-empleado" data-id="${empleado.id}" />
+                         <div class="accion-contenedor">
+                           <img src="../img/info.png" class="ver-info" data-id="${empleado.id}" />
+                           <span class="tooltip-text">Ver Info</span>
+                         </div>
+                         <div class="accion-contenedor">
+                           <img src="../img/edit2.png" class="editar-empleado" data-id="${empleado.id}" />
+                           <span class="tooltip-text">Editar</span>
+                         </div>
+                         <div class="accion-contenedor">
+                           <img src="../img/delete.png" class="eliminar-empleado" data-id="${empleado.id}" />
+                           <span class="tooltip-text">Eliminar</span>
+                         </div>
                         </td>
                     `;
           tablaEmpleados.appendChild(tr);
@@ -142,9 +151,11 @@ document.addEventListener("DOMContentLoaded", function () {
       .then((data) => {
         const rolSelect = document.getElementById("rolSelect");
         rolSelect.innerHTML = "";
+
         data.forEach((rol) => {
           const option = document.createElement("option");
           option.value = rol.id;
+
           option.textContent = rol.descripcion;
           rolSelect.appendChild(option);
         });
@@ -167,12 +178,11 @@ document.addEventListener("DOMContentLoaded", function () {
       .then((response) => response.json())
       .then((data) => {
         alert("Rol actualizado con éxito");
-        cerrarModalEditRole(); // Cierra el modal después de guardar exitosamente
+        cerrarModalEditRole();
       })
       .catch((error) => console.error("Error al actualizar el rol:", error));
   }
 
-  // Cargar las funciones de un empleado en el modal Ver Info
   function cargarFuncionesEmpleado(empleadoId) {
     fetch(`http://localhost:8080/empleados/${empleadoId}/funciones`)
       .then((response) => {
@@ -204,6 +214,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
           const btnEliminar = document.createElement("button");
           btnEliminar.textContent = "Eliminar";
+          btnEliminar.classList.add("delete-funcion");
           btnEliminar.onclick = function () {
             eliminarFuncionDeEmpleado(empleadoId, funcion.id);
           };
@@ -216,7 +227,6 @@ document.addEventListener("DOMContentLoaded", function () {
       });
   }
 
-  // Cargar fechas disponibles para asignar una nueva función
   function cargarFechasDisponibles() {
     fetch("http://localhost:8080/funciones/fechas_disponibles")
       .then((response) => response.json())
@@ -304,7 +314,6 @@ document.addEventListener("DOMContentLoaded", function () {
         if (!response.ok) {
           throw new Error("Error al eliminar la relación");
         }
-        // Si la respuesta es 204 (No Content), no hace falta hacer .json()
         alert("Relación eliminada correctamente");
         cargarFuncionesEmpleado(empleadoId);
       })
@@ -313,8 +322,6 @@ document.addEventListener("DOMContentLoaded", function () {
         alert("Hubo un error al eliminar la relación");
       });
   }
-
-  //Modal para agregar empleado
 
   document
     .getElementById("btn-agregar-empleado")
@@ -335,6 +342,10 @@ document.addEventListener("DOMContentLoaded", function () {
       .then((data) => {
         const rolSelect = document.getElementById("empleado-rol");
         rolSelect.innerHTML = "";
+        const optionDefault = document.createElement("option");
+        optionDefault.value = "";
+        optionDefault.textContent = "Seleccione un rol";
+        rolSelect.appendChild(optionDefault);
         data.forEach((rol) => {
           const option = document.createElement("option");
           option.value = rol.id;
@@ -348,8 +359,15 @@ document.addEventListener("DOMContentLoaded", function () {
   document
     .getElementById("btn-guardar-empleado")
     .addEventListener("click", function () {
-      document.getElementById("modalAgregarEmpleado").style.display = "none";
+      const form = document.getElementById("form-agregar-empleado");
+      if (!form.checkValidity()) {
+        alert("Por favor completa todos los campos requeridos.");
+        form.reportValidity();
+        return;
+      }
       agregarEmpleado();
+      document.getElementById("modalAgregarEmpleado").style.display = "none";
+      document.getElementById("form-agregar-empleado").reset();
     });
 
   function agregarEmpleado() {
@@ -391,7 +409,7 @@ document.addEventListener("DOMContentLoaded", function () {
       })
       .catch((error) => {
         console.error("Error:", error);
-        alert("Hubo un problema al guardar el empleado");
+        alert("Completa todos los campos del formulario");
       });
   }
 
@@ -408,9 +426,18 @@ document.addEventListener("DOMContentLoaded", function () {
                     ${empleado.rol.descripcion}
                     </td>
                     <td>
+                      <div class="accion-contenedor">
                         <img src="../img/info.png" class="ver-info" data-id="${empleado.id}" />
+                        <span class="tooltip-text">Ver Info</span>
+                      </div>
+                      <div class="accion-contenedor">
                         <img src="../img/edit2.png" class="editar-empleado" data-id="${empleado.id}" />
+                        <span class="tooltip-text">Editar</span>
+                      </div>
+                      <div class="accion-contenedor">
                         <img src="../img/delete.png" class="eliminar-empleado" data-id="${empleado.id}" />
+                        <span class="tooltip-text">Eliminar</span>
+                      </div>
                     </td>
             `;
       tablaEmpleados.appendChild(fila);
@@ -418,7 +445,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // Función para filtrar empleados
   function filtrarEmpleados() {
     const termino = document
       .querySelector("#buscadorEmpleados")
@@ -457,7 +483,6 @@ document.addEventListener("DOMContentLoaded", function () {
       });
   }
 
-  // Escuchar el evento de entrada en el buscador
   document
     .querySelector("#buscadorEmpleados")
     .addEventListener("input", filtrarEmpleados);

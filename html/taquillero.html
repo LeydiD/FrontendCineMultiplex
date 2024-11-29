@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sistema de Reserva de Entradas</title>
+    <link rel="stylesheet" href="../css/taquillero.css" />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Mogra&display=swap");
+    </style>
+  </head>
+  <body>
+    <header class="header">
+      <div class="header-left">
+        <img src="../img/palomitas.png" alt="Logo Cine" class="logo" />
+        <h1>Cine Multiplex</h1>
+      </div>
+      <div class="header-right">
+        <span id="usuarioNombre"></span>
+        <img
+          src="../img/exit.png"
+          alt="Salir"
+          class="logout-icon"
+          id="logoutButton"
+        />
+      </div>
+    </header>
+
+    <div id="ticket-booking-app">
+      <div class="ticket-booking-container">
+        <div class="ticket-booking-card">
+          <div class="ticket-booking-card-header">
+            <h1 class="ticket-booking-title">Sistema de Reserva de Entradas</h1>
+          </div>
+          <div class="ticket-booking-card-content">
+            <!-- Selector de fecha -->
+            <div class="date-selector">
+              <label for="movie-date">Selecciona una fecha:</label>
+              <input type="date" id="movie-date" name="movie-date" />
+            </div>
+            <!-- Selector de función -->
+            <div class="movie-show-selector">
+              <select id="movie-show-select" class="movie-show-select-trigger">
+                <option value="">Selecciona una función:</option>
+              </select>
+            </div>
+
+            <!-- Información de la función -->
+            <div
+              id="movie-show-info"
+              class="movie-show-info"
+              style="display: none"
+            >
+              <h3 id="movie-title-time"></h3>
+              <p class="theater-room-info"></p>
+              <p class="ticket-price-info"></p>
+              <p class="movie-duration"></p>
+              <p class="movie-synopsis"></p>
+              <p class="movie-genre"></p>
+              <p class="theater-room-seats"></p>
+            </div>
+
+            <!-- Sección de asientos -->
+            <div class="seat-selection-section">
+              <!-- Leyenda -->
+              <div class="seat-legend">
+                <div class="seat-legend-item">
+                  <div class="seat-legend-color seat-available"></div>
+                  <span>Disponible</span>
+                </div>
+                <div class="seat-legend-item">
+                  <div class="seat-legend-color seat-occupied"></div>
+                  <span>Ocupado</span>
+                </div>
+                <div class="seat-legend-item">
+                  <div class="seat-legend-color seat-selected"></div>
+                  <span>Seleccionado</span>
+                </div>
+              </div>
+
+              <!-- Layout del teatro -->
+              <div
+                id="theater-seating-layout"
+                class="theater-seating-layout"
+                style="display: none"
+              >
+                <div class="theater-screen"></div>
+                <!-- Filas de asientos -->
+                <div class="seat-row">
+                  <!-- <button class="theater-seat" data-seat-id="A1">A1</button>
+                                <button class="theater-seat" data-seat-id="A2">A2</button>
+                                <button class="theater-seat seat-occupied" data-seat-id="A3">A3</button> -->
+                </div>
+              </div>
+            </div>
+
+            <!-- Resumen de la reserva -->
+            <div
+              id="booking-summary"
+              class="booking-summary"
+              style="display: none"
+            >
+              <p id="selected-seats-info">Asientos seleccionados:</p>
+
+              <!-- Selector para elegir la categoría de boleto -->
+              <div class="category-selector">
+                <select id="category-select" class="category-select-trigger">
+                  <option value=""></option>
+                </select>
+              </div>
+
+              <p id="total-price" style="display: none"></p>
+
+              <!-- Contenedor para el mensaje de descuento y el precio con descuento -->
+              <div id="discount-message" style="display: none">
+                <p id="discount-description"></p>
+                <p id="discounted-price"></p>
+              </div>
+
+              <!-- Checkbox para mostrar/ocultar la sección de snacks -->
+              <div class="snacks-toggle">
+                <input type="checkbox" id="show-snacks" />
+                <label for="show-snacks">¿Desea agregar Snacks?</label>
+              </div>
+
+              <div id="snacks-section" style="display: none">
+                <h2>Selecciona tus Snacks</h2>
+                <input
+                  type="text"
+                  id="buscadorSnacks"
+                  class="buscador"
+                  placeholder="Buscar snacks..."
+                />
+                <div id="snack-container"></div>
+                <div id="snack-total-container">
+                  <label for="snack-total">Total por Snacks: </label>
+                  <input type="text" id="snack-total" value="$0" readonly />
+                </div>
+              </div>
+
+              <!-- Botón para calcular el total -->
+              <button id="calculate-total" class="calculate-total-button">
+                Calcular Total
+              </button>
+              <div id="final-total">
+                <p>-<span id="combined-total">$0</span></p>
+              </div>
+
+              <div id="client-section">
+                <div class="buscar-cliente">
+                  <label for="document-number">Número de documento:</label>
+                  <input type="text" id="document-number" />
+                  <button id="search-client">Buscar Cliente</button>
+                </div>
+
+                <form id="register-client-form" style="display: none">
+                  <h3>Registrar Cliente</h3>
+                  <label for="client-name">Nombre:</label>
+                  <input type="text" id="client-name" />
+                  <label for="client-document">Documento:</label>
+                  <input type="text" id="client-document" readonly />
+                  <label for="client-phone">Teléfono:</label>
+                  <input type="text" id="client-phone" />
+                  <label for="client-email">Correo Electrónico:</label>
+                  <input type="email" id="client-email" />
+                  <button type="button" id="register-client">Registrar</button>
+                </form>
+              </div>
+
+              <button id="reserve-button" class="reserve-button" disabled>
+                Realizar pedido
+              </button>
+            </div>
+
+            <!-- Modal para el resumen del pedido -->
+            <div id="order-modal" class="modal">
+              <div class="modal-content">
+                <span id="close-modal" class="close">&times;</span>
+                <h2>Resumen del Pedido</h2>
+                <p><strong>Fecha:</strong> <span id="order-date"></span></p>
+                <p><strong>Total:</strong> <span id="order-total"></span></p>
+                <p><strong>Cliente:</strong> <span id="order-client"></span></p>
+
+                <select id="payment-method-select">
+                  <option value="">Seleccione un método de pago</option>
+                </select>
+
+                <button id="confirm-order">Confirmar Pedido</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="../js/usuario.js"></script>
+    <script type="module" src="../js/taquillero_cliente.js"></script>
+    <script type="module" src="../js/taquillero_pedido.js"></script>
+    <script type="module" src="../js/taquillero_boleto.js"></script>
+  </body>
+</html>

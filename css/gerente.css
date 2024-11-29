@@ -1,17 +1,16 @@
-/* Estilos generales */
 body {
   font-family: "DM Sans", sans-serif;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  background: url("../img/fondo.jpg") no-repeat center center fixed;
+  background: url("../img/fondo4.jpg") no-repeat center center fixed;
   background-size: cover;
 }
 
 h2 {
   font-family: "Mogra", cursive;
   text-align: center;
-  font-size: 40px;
+  font-size: 45px;
   color: #e8e3e3;
 }
 
@@ -44,9 +43,10 @@ h3 {
 }
 
 .header-left .logo {
-  width: 10%;
+  width: 14%;
   height: auto;
   margin-right: 1rem;
+  object-fit: contain;
 }
 
 .header-left h1 {
@@ -65,8 +65,8 @@ h3 {
 }
 
 .logout-icon {
-  width: 7%;
-  height: 7%;
+  width: 10%;
+  height: 10%;
   cursor: pointer;
   transition: transform 0.3s ease, opacity 0.3s ease;
 }
@@ -108,13 +108,8 @@ h3 {
   overflow: hidden;
 }
 .menu-btn:hover {
-  background-color: rgba(
-    220,
-    167,
-    167,
-    0.2
-  ); /* Subtle red background on hover */
-  color: #d8d64e; /* Red text on hover */
+  background-color: rgba(220, 167, 167, 0.2);
+  color: #d8d64e;
 }
 
 .menu-btn:hover::before {
@@ -127,11 +122,20 @@ h3 {
   background-color: #ec920b;
 }
 
+#usuarioNombre {
+  font-family: "DM Sans", sans-serif;
+  font-size: 18px;
+  color: #dae8ea;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-right: 10px;
+}
+
 .content {
-  margin-left: 0; /* Eliminar el margen */
+  margin-left: 0;
   padding: 20px;
-  width: 100%; /* Asegurarse de que ocupe el 100% del ancho */
-  box-sizing: border-box; /* Para que el padding no afecte el ancho */
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .vista {
@@ -139,6 +143,7 @@ h3 {
   margin-top: 8%;
 }
 
+/* Estilos del buscador */
 .contenedor-buscador-btn {
   display: flex;
   justify-content: center;
@@ -146,7 +151,7 @@ h3 {
   gap: 10px;
   margin: 30px 0;
 }
-/* Estilos del buscador */
+
 .buscador {
   width: 50%;
   padding: 10px 15px;
@@ -158,39 +163,15 @@ h3 {
 
 .buscador:focus {
   outline: none;
-  border-color: #868789; /* Color azul para el borde al enfocar */
-  box-shadow: 0 0 5px rgba(250, 248, 247, 0.5); /* Sombra azul */
-}
-/* Estilos del botón */
-.btn-agregar,
-.asig_funcion,
-.btn_asig_funcion,
-.cerrarModalAsig {
-  padding: 10px 20px; /* Tamaño del botón */
-  background-color: #ef190a;
-  color: rgb(255, 255, 255); /* Color del texto */
-  font-size: 16px; /* Tamaño de texto */
-  border: none; /* Sin borde */
-  border-radius: 4px; /* Bordes redondeados */
-  cursor: pointer; /* Cursor de puntero */
-  transition: all 0.3s ease;
+  border-color: #868789;
+  box-shadow: 0 0 5px rgba(250, 248, 247, 0.5);
 }
 
-.btn-agregar:hover {
-  background-color: #db3e0e; /* Color al pasar el ratón */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra al pasar el ratón */
-  transform: translateY(-2px); /* Levantamiento */
-}
-
-.btn-agregar:active {
-  background-color: #7e281e; /* Color más oscuro al hacer clic */
-  transform: translateY(0); /* Sin levantamiento */
-}
-
+/* Estilas tablas y de sus iconos */
 table {
-  width: 80%; /* Establece un ancho específico (puedes ajustar el 80% a lo que necesites) */
-  max-width: 1100px; /* Puedes limitar el ancho máximo si lo deseas */
-  margin: 20px auto; /* Centra la tabla horizontalmente */
+  width: 80%;
+  max-width: 1100px;
+  margin: 20px auto;
   border-collapse: collapse;
   background-color: white;
   border-radius: 10px;
@@ -213,23 +194,77 @@ table tr:hover {
   background-color: #e7e2e0;
 }
 
-td > img {
+td > .accion-contenedor {
   display: inline-block;
-  margin: 0 5px; /* Espaciado entre los íconos */
-  width: 24px; /* Ajusta el tamaño de los íconos */
+  position: relative;
+  /margin: 0 5px;
+}
+
+.accion-contenedor > img {
+  display: inline-block;
+  width: 24px;
   height: 24px;
   cursor: pointer;
   transition: transform 0.3s, opacity 0.3s ease;
 }
 
-td > img:hover {
-  transform: scale(1.1); /* Agranda el ícono ligeramente */
-  opacity: 0.8; /* Efecto visual al pasar el ratón */
+.accion-contenedor > img:hover {
+  transform: scale(1.3);
+  opacity: 0.8;
 }
 
+.accion-contenedor > .tooltip-text {
+  visibility: hidden;
+  opacity: 0;
+  position: absolute;
+  bottom: 125%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  padding: 5px;
+  border-radius: 5px;
+  white-space: nowrap;
+  font-size: 12px;
+  transition: opacity 0.3s ease;
+  z-index: 10;
+}
+
+.accion-contenedor > .tooltip-text::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 5px;
+  border-style: solid;
+  border-color: #333 transparent transparent transparent;
+}
+
+.accion-contenedor:hover > .tooltip-text {
+  visibility: visible;
+  opacity: 1;
+}
+
+.delete-funcion {
+  background-color: #e74c3c;
+  color: #fff;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+.delete-funcion:hover {
+  background-color: #c0392b;
+}
 /*--------------- Estilos para los modales ------------------*/
 .modal {
-  display: none; /* Oculta el modal por defecto */
+  display: none;
   position: fixed;
   top: 0;
   left: 0;
@@ -244,12 +279,12 @@ td > img:hover {
   position: fixed;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%); /* Centra el modal */
+  transform: translate(-50%, -50%);
   background-color: white;
   padding: 20px;
   border-radius: 10px;
   width: 50%;
-  max-height: 60%; /* Limita la altura máxima del modal */
+  max-height: 60%;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   overflow-y: auto;
 }
@@ -283,7 +318,6 @@ td > img:hover {
   margin-bottom: 5px;
 }
 
-/**/
 .cerrar-modal {
   position: absolute;
   top: 10px;
@@ -292,7 +326,53 @@ td > img:hover {
   cursor: pointer;
 }
 
-.btn-guardar {
+/* Estilo de los buttons */
+.btn-agregar,
+.btn_asig_funcion,
+.cerrarModalAsig {
+  padding: 10px 20px;
+  background-color: #ef190a;
+  color: rgb(255, 255, 255);
+  font-size: 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.asig_funcion {
+  padding: 10px 20px;
+  color: rgb(0, 0, 0);
+  font-size: 16px;
+  font-weight: 600;
+  border: 2px solid transparent;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background-color: transparent;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 0 auto;
+}
+
+.asig_funcion .icon {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.asig_funcion:hover {
+  background-color: #ef190a;
+  color: white;
+  transform: translateY(-3px);
+  border-color: #ef190a;
+}
+
+.btn-guardar,
+#btn-editar-funcion,
+#btn-guardar-funcion {
   padding: 10px 20px;
   background-color: #f44336;
   color: white;
@@ -301,14 +381,19 @@ td > img:hover {
   cursor: pointer;
   transition: all 0.3s ease;
   width: 100%;
-  display: inline-block;
   text-align: center;
   margin-top: 15px;
   border: none;
 }
 
+.btn-agregar:hover,
 .btn-guardar:hover {
   background-color: #d32f2f;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra al pasar el ratón */
-  transform: translateY(-2px); /* Levantamiento del botón */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transform: translateY(-2px);
+}
+
+.btn-agregar:active {
+  background-color: #7e281e;
+  transform: translateY(0);
 }
