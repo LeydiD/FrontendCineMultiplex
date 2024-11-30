@@ -290,51 +290,48 @@ async function cargarDescuento(categoriaId, precioTotal, nameCategory) {
     alert("Hubo un problema al cargar los descuentos");
   }
 }
+
 function updateBookingSummary() {
-  const showSnacksCheckbox = document.getElementById("toggleSnacks");
+  const showSnacksCheckbox = document.getElementById("show-snacks");
   const snacksSection = document.getElementById("snacks-section");
 
+  if (!showSnacksCheckbox) {
+    console.error("El checkbox de snacks no se encuentra en el DOM.");
+    return;
+  }
+
   if (selectedSeats.length > 0) {
-    document.getElementById("booking-summary").style.display = "block"; // Mostrar el resumen
+    document.getElementById("booking-summary").style.display = "block";
     cargarCategorias();
 
-    // Mostrar snacks solo si el checkbox está marcado
     if (showSnacksCheckbox.checked) {
-      snacksSection.style.display = "block"; // Mostrar la sección de snacks
-      loadSnacks(); // Cargar snacks si el checkbox está activado
+      snacksSection.style.display = "block";
+      loadSnacks();
     } else {
-      snacksSection.style.display = "none"; // Ocultar la sección de snacks si el checkbox no está activado
+      snacksSection.style.display = "none";
     }
   } else {
-    document.getElementById("booking-summary").style.display = "none"; // Ocultar el resumen si no hay asientos seleccionados
-    snacksSection.style.display = "none"; // Ocultar la sección de snacks si no hay asientos seleccionados
+    document.getElementById("booking-summary").style.display = "none";
+    snacksSection.style.display = "none";
   }
 
   selectedSeatsInfo.textContent = `Asientos seleccionados: ${selectedSeats.join(
     ", "
   )}`;
-
-  // Asegúrate de que esta línea esté correctamente colocada después de los cambios en los asientos
-  reserveButton.textContent = `Realizar pedido`;
-
-  // Deshabilitar el botón si no hay asientos seleccionados
-  reserveButton.disabled = selectedSeats.length === 0;
 }
 
-// Función para cargar snacks
 let snacks = [];
 
-// Función para cargar snacks
 async function loadSnacks() {
   try {
     const [snacksResponse, promociones] = await Promise.all([
-      fetch("http://localhost:8080/snacks"), // Ajusta la URL si es necesario
-      cargarPromocionesSnacks(), // Asegúrate de tener esta función definida
+      fetch("http://localhost:8080/snacks"),
+      cargarPromocionesSnacks(),
     ]);
 
     if (!snacksResponse.ok) throw new Error("Error al cargar los snacks");
 
-    snacks = await snacksResponse.json(); // Asigna los snacks a la variable global
+    snacks = await snacksResponse.json();
     snackContainer.innerHTML = "";
     snacks.forEach((snack) => {
       const snackPromo = promociones.find(
@@ -371,7 +368,6 @@ async function loadSnacks() {
       snackContainer.appendChild(snackCard);
     });
 
-    // Mostrar la sección de snacks si hay resultados
     document.getElementById("snacks-section").style.display =
       snacks.length > 0 ? "block" : "none";
   } catch (error) {
@@ -380,24 +376,22 @@ async function loadSnacks() {
     document.getElementById("snacks-section").style.display = "none";
   }
 }
-// Función para escuchar el cambio en el checkbox
 function setupSnacksToggle() {
   const showSnacksCheckbox = document.getElementById("show-snacks");
   const snacksSection = document.getElementById("snacks-section");
 
   showSnacksCheckbox.addEventListener("change", function () {
     if (showSnacksCheckbox.checked) {
-      snacksSection.style.display = "block"; // Mostrar la sección de snacks
+      snacksSection.style.display = "block";
       if (selectedSeats.length > 0) {
-        loadSnacks(); // Cargar los snacks solo si los asientos están seleccionados
+        loadSnacks();
       }
     } else {
-      snacksSection.style.display = "none"; // Ocultar la sección de snacks
+      snacksSection.style.display = "none";
     }
   });
 }
 
-// Inicializar el toggle del checkbox
 document.addEventListener("DOMContentLoaded", function () {
   setupSnacksToggle();
 });
@@ -405,16 +399,14 @@ document.addEventListener("DOMContentLoaded", function () {
 document.getElementById("show-snacks").addEventListener("change", function () {
   const snacksSection = document.getElementById("snacks-section");
   if (this.checked) {
-    snacksSection.style.display = "block"; // Mostrar la sección de snacks
+    snacksSection.style.display = "block";
   } else {
-    snacksSection.style.display = "none"; // Ocultar la sección de snacks
+    snacksSection.style.display = "none";
   }
 });
 
-//BUSCADOR DE Snacks
-
 function mostrarsnacks(snacksFiltradas) {
-  snackContainer.innerHTML = ""; // Limpiar el contenedor de snacks
+  snackContainer.innerHTML = "";
   snacksFiltradas.forEach((snack) => {
     const snackCard = document.createElement("div");
     snackCard.className = `snack-card ${
@@ -440,27 +432,21 @@ function mostrarsnacks(snacksFiltradas) {
     snackContainer.appendChild(snackCard);
   });
 
-  // Si no hay snacks filtrados, mostrar un mensaje
   if (snacksFiltradas.length === 0) {
     snackContainer.innerHTML =
       "<p>No se encontraron snacks que coincidan con la búsqueda.</p>";
   }
 }
 
-// Función para filtrar snacks solo por ID
-
 function filtrarSnacks() {
-  const termino = buscadorSnacks.value.toLowerCase(); // Obtener el valor del buscador
-  const snacksFiltrados = snacks.filter(
-    (snack) => snack.id.toLowerCase().includes(termino) // Filtrar por nombre (id) del snack
+  const termino = buscadorSnacks.value.toLowerCase();
+  const snacksFiltrados = snacks.filter((snack) =>
+    snack.id.toLowerCase().includes(termino)
   );
-  mostrarsnacks(snacksFiltrados); // Mostrar los snacks filtrados
+  mostrarsnacks(snacksFiltrados);
 }
 
-// Evento de entrada en el campo de búsqueda
 buscadorSnacks.addEventListener("input", filtrarSnacks);
-
-// Función para actualizar el total combinado (boletos + snacks)
 document.getElementById("calculate-total").addEventListener("click", () => {
   const combinedTotal = totalBoletosConDescuento + snackTotal;
   const formattedTotal = new Intl.NumberFormat("es-CO", {
@@ -528,7 +514,6 @@ const closeModal = document.getElementById("close-modal");
 const confirmOrderButton = document.getElementById("confirm-order");
 const paymentMethodSelect = document.getElementById("payment-method-select");
 
-// Mostrar el modal con el resumen del pedido
 reserveButton.addEventListener("click", async () => {
   if (selectedSeats.length > 0 && selectedShow) {
     if (!clientId) {

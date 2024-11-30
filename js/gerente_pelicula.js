@@ -110,7 +110,6 @@ document.addEventListener("DOMContentLoaded", function () {
       .catch((error) => console.error("Error al cargar los géneros:", error));
   }
 
-  //Agregar Película
   formPelicula.addEventListener("submit", function (event) {
     event.preventDefault();
     const generoId = document.getElementById("genero-pelicula_agregar").value;
@@ -149,7 +148,6 @@ document.addEventListener("DOMContentLoaded", function () {
       );
   });
 
-  //BUSCADOR DE PELICULAS
   function mostrarPeliculas(peliculasFiltradas) {
     tablaPeliculas.innerHTML = "";
     peliculasFiltradas.forEach((pelicula) => {

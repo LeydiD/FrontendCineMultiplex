@@ -10,7 +10,6 @@ document.getElementById("search-client").addEventListener("click", async () => {
   }
 
   try {
-    // Llamar al servicio para buscar cliente por documento
     const response = await fetch(
       `http://localhost:8080/clientes/buscar-por-documento?documento=${documentNumber}`
     );
@@ -18,22 +17,15 @@ document.getElementById("search-client").addEventListener("click", async () => {
     if (response.ok) {
       const client = await response.json();
       alert(`Cliente encontrado: ${client.nombre}`);
-
-      // Asignar el id del cliente encontrado a la variable global
       clientId = client.id;
       clienteNombre = client.nombre;
       console.log("ID del cliente encontrado:", clientId);
-
-      // Habilitar el botón de reservar
       document.getElementById("reserve-button").disabled = false;
     } else if (response.status === 404) {
       alert("Cliente no encontrado. Por favor, regístrate.");
 
-      // Mostrar el formulario de registro
       const registerForm = document.getElementById("register-client-form");
       registerForm.style.display = "block";
-
-      // Rellenar el campo de documento en el formulario de registro
       document.getElementById("client-document").value = documentNumber;
     } else {
       throw new Error("Error al buscar cliente.");
@@ -65,7 +57,6 @@ document
     };
 
     try {
-      // Llamar al servicio para registrar al cliente
       const response = await fetch("http://localhost:8080/clientes", {
         method: "POST",
         headers: {
@@ -78,11 +69,9 @@ document
         const client = await response.json();
         alert("Cliente registrado exitosamente.");
 
-        // Asignar el id del nuevo cliente registrado a la variable global
         clientId = client.id;
         clienteNombre = client.nombre;
         console.log("ID del nuevo cliente registrado:", clientId);
-        // Ocultar el formulario de registro y habilitar el botón de reservar
         document.getElementById("register-client-form").style.display = "none";
         document.getElementById("reserve-button").disabled = false;
       } else {

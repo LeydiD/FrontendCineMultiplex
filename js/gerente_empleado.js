@@ -31,10 +31,8 @@ document.addEventListener("DOMContentLoaded", function () {
     cargarEmpleados();
   }
 
-  // Cerrar el modal al hacer clic en el botón de cerrar
   closeModalEditRole.addEventListener("click", cerrarModalEditRole);
 
-  // Cerrar el modal al hacer clic fuera del contenido del modal
   modalEditRole.addEventListener("click", (event) => {
     if (event.target === modalEditRole) {
       cerrarModalEditRole();
@@ -65,7 +63,6 @@ document.addEventListener("DOMContentLoaded", function () {
       modal.style.display = "none";
     });
 
-  // Función para abrir el modal Ver Info
   function abrirModalVerInfo(empleadoId) {
     document.getElementById("modalVerInfo").style.display = "block";
     cargarFuncionesEmpleado(empleadoId);
@@ -77,7 +74,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // Función para abrir el modal Asignar Función
   function abrirModalAsignar(empleadoId) {
     document.getElementById("modalAsignarFuncion").style.display = "block";
     cargarFechasDisponibles();
@@ -144,7 +140,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // Carga los roles en el editar rol empleado
   function cargarRoles() {
     fetch("http://localhost:8080/rols")
       .then((response) => response.json())
@@ -245,7 +240,6 @@ document.addEventListener("DOMContentLoaded", function () {
       .catch((error) => console.error("Error al cargar fechas:", error));
   }
 
-  // Cargar funciones disponibles para la fecha seleccionada
   function cargarFuncionesPorFecha() {
     const fechaSeleccionada =
       document.getElementById("fechaSeleccionada").value;
@@ -273,7 +267,6 @@ document.addEventListener("DOMContentLoaded", function () {
     .getElementById("fechaSeleccionada")
     .addEventListener("change", cargarFuncionesPorFecha);
 
-  // Función para asignar una función al empleado
   function asignarFuncion() {
     const fecha = document.getElementById("fechaSeleccionada").value;
     const funcionId = document.getElementById("funcionSeleccionada").value;

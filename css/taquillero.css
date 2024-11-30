@@ -9,8 +9,8 @@ body {
 
 .header {
   display: flex;
-  justify-content: space-between; /* Distribuye los elementos del header entre los extremos */
-  align-items: center; /* Alinea verticalmente todos los elementos del header */
+  justify-content: space-between;
+  align-items: center;
   padding: 0.5rem 2rem;
   background-color: #000000;
   color: #fff;
@@ -18,7 +18,7 @@ body {
 
 .header-left {
   display: flex;
-  align-items: center; /* Asegura que el logo y el título estén alineados verticalmente */
+  align-items: center;
 }
 
 .header-left .logo {
@@ -31,27 +31,27 @@ body {
   font-family: "Mogra", serif;
   font-size: 30px;
   color: #ffd700;
-  margin: 0; /* Elimina márgenes extra */
+  margin: 0;
 }
 
 .header-right {
   display: flex;
-  align-items: center; /* Alinea verticalmente los elementos del lado derecho */
-  justify-content: flex-end; /* Asegura que los elementos estén alineados a la derecha */
+  align-items: center;
+  justify-content: flex-end;
   gap: 1rem;
-  flex-grow: 1; /* Permite que tome el espacio sobrante y empuje los elementos hacia la derecha */
+  flex-grow: 1;
 }
 
 .logout-icon {
-  width: 10%; /* Ajusta el tamaño exacto del ícono */
+  width: 10%;
   height: 10%;
   cursor: pointer;
   transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
 .logout-icon:hover {
-  transform: scale(1.1); /* Agranda el ícono al pasar el mouse */
-  opacity: 0.8; /* Disminuye ligeramente la opacidad */
+  transform: scale(1.1);
+  opacity: 0.8;
 }
 
 #usuarioNombre {
@@ -232,7 +232,7 @@ body {
   font-weight: bold;
 }
 
-.snack-card input[type="number"] {
+.buscadorSnacks {
   width: 60px;
   padding: 4px;
   text-align: center;
@@ -240,7 +240,7 @@ body {
   border-radius: 4px;
   margin: 0;
 }
-/* Contenedor de la sección de snacks */
+
 #snacks-section {
   margin-top: 20px;
   padding: 10px;
@@ -253,7 +253,6 @@ body {
   margin-right: auto;
 }
 
-/* Título de la sección de snacks */
 #snacks-section h2 {
   font-size: 30px;
   font-family: "Mogra", serif;
@@ -263,7 +262,6 @@ body {
   margin: 5%;
 }
 
-/* Estilos para el input del buscador de snacks */
 .buscador {
   width: 100%;
   max-width: 600px;
@@ -391,7 +389,6 @@ body {
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
 }
 
-/* Estilos para la sección de buscar cliente */
 .buscar-cliente {
   margin-top: 30px;
   display: flex;
@@ -400,7 +397,7 @@ body {
   justify-content: center;
 }
 
-.buscar-cliente input[type="text"] {
+#document-number {
   width: 150px;
   padding: 6px;
   border: 1px solid #ccc;
@@ -410,7 +407,6 @@ body {
   box-sizing: border-box;
 }
 
-/* Estilos para el formulario de registrar cliente */
 #register-client-form {
   display: none;
   background-color: #f9f9f9;
@@ -514,4 +510,83 @@ body {
   color: black;
   text-decoration: none;
   cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1rem;
+  }
+
+  .header-left h1 {
+    font-size: 24px;
+  }
+
+  .header-left .logo {
+    width: 15%;
+  }
+
+  .logout-icon {
+    width: 10%;
+    height: 10%;
+  }
+
+  #usuarioNombre {
+    font-size: 12px;
+  }
+
+  .ticket-booking-container {
+    max-width: 90%;
+  }
+  .snack-card {
+    grid-template-columns: 1fr;
+  }
+
+  .seat-row {
+    flex-wrap: wrap;
+  }
+
+  .theater-seat {
+    width: 26px;
+    height: 26px;
+    font-size: 8px;
+  }
+
+  .buscar-cliente input[type="text"] {
+    width: 70%;
+  }
+
+  .buscador {
+    width: 70%;
+  }
+  #client-section {
+    width: 90%;
+    padding: 10px;
+  }
+
+  .buscar-cliente {
+    gap: 5px;
+  }
+
+  .buscar-cliente label,
+  .buscar-cliente input,
+  .buscar-cliente button {
+    font-size: 14px;
+    padding: 8px;
+  }
+
+  #final-total p {
+    font-size: 16px;
+  }
+
+  #register-client-form {
+    width: 90%;
+  }
+
+  .seat-legend-color {
+    width: 10px;
+    height: 10px;
+    margin-right: 2px;
+  }
 }

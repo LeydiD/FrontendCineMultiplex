@@ -33,19 +33,16 @@
             <h1 class="ticket-booking-title">Sistema de Reserva de Entradas</h1>
           </div>
           <div class="ticket-booking-card-content">
-            <!-- Selector de fecha -->
             <div class="date-selector">
               <label for="movie-date">Selecciona una fecha:</label>
               <input type="date" id="movie-date" name="movie-date" />
             </div>
-            <!-- Selector de función -->
             <div class="movie-show-selector">
               <select id="movie-show-select" class="movie-show-select-trigger">
                 <option value="">Selecciona una función:</option>
               </select>
             </div>
 
-            <!-- Información de la función -->
             <div
               id="movie-show-info"
               class="movie-show-info"
@@ -78,23 +75,16 @@
                 </div>
               </div>
 
-              <!-- Layout del teatro -->
               <div
                 id="theater-seating-layout"
                 class="theater-seating-layout"
                 style="display: none"
               >
                 <div class="theater-screen"></div>
-                <!-- Filas de asientos -->
-                <div class="seat-row">
-                  <!-- <button class="theater-seat" data-seat-id="A1">A1</button>
-                                <button class="theater-seat" data-seat-id="A2">A2</button>
-                                <button class="theater-seat seat-occupied" data-seat-id="A3">A3</button> -->
-                </div>
+                <div class="seat-row"></div>
               </div>
             </div>
 
-            <!-- Resumen de la reserva -->
             <div
               id="booking-summary"
               class="booking-summary"
@@ -102,7 +92,6 @@
             >
               <p id="selected-seats-info">Asientos seleccionados:</p>
 
-              <!-- Selector para elegir la categoría de boleto -->
               <div class="category-selector">
                 <select id="category-select" class="category-select-trigger">
                   <option value=""></option>
@@ -110,14 +99,11 @@
               </div>
 
               <p id="total-price" style="display: none"></p>
-
-              <!-- Contenedor para el mensaje de descuento y el precio con descuento -->
               <div id="discount-message" style="display: none">
                 <p id="discount-description"></p>
                 <p id="discounted-price"></p>
               </div>
 
-              <!-- Checkbox para mostrar/ocultar la sección de snacks -->
               <div class="snacks-toggle">
                 <input type="checkbox" id="show-snacks" />
                 <label for="show-snacks">¿Desea agregar Snacks?</label>
@@ -138,7 +124,6 @@
                 </div>
               </div>
 
-              <!-- Botón para calcular el total -->
               <button id="calculate-total" class="calculate-total-button">
                 Calcular Total
               </button>
@@ -172,7 +157,6 @@
               </button>
             </div>
 
-            <!-- Modal para el resumen del pedido -->
             <div id="order-modal" class="modal">
               <div class="modal-content">
                 <span id="close-modal" class="close">&times;</span>
